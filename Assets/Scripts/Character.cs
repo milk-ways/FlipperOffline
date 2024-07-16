@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Character : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class Character : MonoBehaviour
     private float moveTime = 2.0f;
 
     public VariableJoystick joy;
+
+    public int panX = 2;
+    public int panY = 2;
+
 
     private void Awake()
     {
@@ -22,9 +27,9 @@ public class Character : MonoBehaviour
 
         Vector3 dir = new Vector3(x, 0, z);
 
-        if (!move)
+        if (!move && (x !=0 || z != 0))
         {
-            StartCoroutine(Move(dir));
+            StartCoroutine(JumpMove(dir));
         }
     }
 
@@ -45,6 +50,26 @@ public class Character : MonoBehaviour
         }
 
         transform.position = targetPosition;
+
+        move = false;
+    }
+
+    public IEnumerator JumpMove(Vector3 dir)
+    {
+        move = true;
+
+        Vector3 currentPosition = transform.position;
+        Vector3 targetPosition = currentPosition + dir * 1.5f;
+
+        var tween = gameObject.transform.DOJump(targetPosition, 3f, 1, 2f);
+        yield return tween.WaitForCompletion();
+
+        transform.position = targetPosition;
+
+        panX += (int)dir.x;
+        panY -= (int)dir.z;
+
+        PanGroup.panGroup[panX + panY * 5].Flip();
 
         move = false;
     }
