@@ -21,4 +21,34 @@ public class PanGroup : MonoBehaviour
             panGroup.Add(pan);
         }
     }
+
+    public string CalcPan()
+    {
+        int redPanCount = 0;
+        int bluePanCount = 0;
+        string str = "";
+
+        foreach (var pan in panGroup)
+        {
+            if (pan.isFlipped)
+            {
+                redPanCount++;
+            }
+            else
+            {
+                bluePanCount++;
+            }
+        }
+
+        if (redPanCount > bluePanCount)
+        {
+            str = redPanCount.ToString() + " : " + bluePanCount.ToString() + "\nRED WIN";
+        }
+        else
+        {
+            str = redPanCount.ToString() + " : " + bluePanCount.ToString() + "\nBLUE WIN";
+        }
+
+        return str;
+    }
 }
