@@ -9,7 +9,7 @@ public class Character : MonoBehaviour
     private bool move;
     private float moveTime = 2.0f;
 
-    public VariableJoystick joy;
+    public DirectionJoystick joy;
 
     public int panX = 2;
     public int panY = 2;
@@ -27,7 +27,7 @@ public class Character : MonoBehaviour
 
         Vector3 dir = new Vector3(x, 0, z);
 
-        if (!move && (x !=0 || z != 0))
+        if (!move && (x !=0 || z != 0) && joy.OverRestriction())
         {
             StartCoroutine(JumpMove(dir));
         }
