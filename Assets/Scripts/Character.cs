@@ -14,10 +14,14 @@ public class Character : MonoBehaviour
     public int panX = 2;
     public int panY = 2;
 
-
     private void Awake()
     {
         anim = GetComponent<Animation>();
+
+        panX = GameManager.Instance.Row / 2;
+        panY = GameManager.Instance.Col / 2;
+
+        //var temp = Instantiate(joy)
     }
 
     private void FixedUpdate()
@@ -67,9 +71,9 @@ public class Character : MonoBehaviour
         transform.position = targetPosition;
 
         panX += (int)dir.x;
-        panY -= (int)dir.z;
+        panY += (int)dir.z;
 
-        PanGroup.panGroup[panX + panY * 5].Flip();
+        GameManager.Instance.panManager.FlipPan(panX + panY * GameManager.Instance.Col);
 
         move = false;
     }

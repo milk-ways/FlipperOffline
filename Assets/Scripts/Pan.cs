@@ -8,11 +8,11 @@ public class Pan : MonoBehaviour
     private Color flipedColor = Color.red;
     private Color nonFlippedColor = Color.blue;
 
+    [SerializeField]
     private Renderer panColor;
 
     private void Awake()
     {
-        panColor = gameObject.GetComponent<Renderer>();
         panColor.material.color = nonFlippedColor;
     }
 

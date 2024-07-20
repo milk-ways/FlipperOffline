@@ -6,7 +6,25 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
 
-    public PanGroup panGroup;
+    //public PanGroup panGroup;
+    public PanManager panManager;
+    public TextManager textManager;
+
+    public GameObject character;
+
+    [SerializeField]
+    private int row;
+    [SerializeField]
+    private int col;
+    [SerializeField]
+    private int gameTime;
+
+    public int Row { get { return row; } }
+    public int Col { get { return col; } }
+
+    //temp code
+    public DirectionJoystick joy;
+
     public static GameManager Instance
     {
         get
@@ -36,5 +54,36 @@ public class GameManager : MonoBehaviour
         }
         // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            GameStart();
+        }
+    }
+
+    private void GameStart()
+    {
+        textManager.TimerStart(gameTime);
+        panManager.GeneratePans(row, col);
+        GenerateCharacter();
+        Camera.main.transform.position += Vector3.right * (row / 2) * 1.5f;
+    }
+
+    public void GameEnd() 
+    {
+        panManager.CountPanColor();
+
+        string str = panManager.RedPanCount.ToString() + " : " + panManager.BluePanCount.ToString();
+        textManager.GameOver(str, panManager.IsRedWin);
+    }
+
+    private void GenerateCharacter()
+    {
+        var temp = Instantiate(character);
+        temp.transform.position = new Vector3((1.5f * (row / 2)), 0.75f, (1.5f * (col / 2)));
+        temp.GetComponent<Character>().joy = joy;
     }
 }
