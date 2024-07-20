@@ -11,6 +11,9 @@ public class DirectionJoystick : Joystick
 
     [SerializeField] private RectTransform moveRestriction = null;
 
+    public new float Horizontal { get { return GetDirectionFloat(input.x, AxisOptions.Horizontal); } }
+    public new float Vertical { get { return GetDirectionFloat(input.y, AxisOptions.Vertical); } }
+
     protected override void Start()
     {
         InputThreshold = inputThreshold;
@@ -33,6 +36,11 @@ public class DirectionJoystick : Joystick
     public bool OverRestriction()
     {
         return input.magnitude >= inputThreshold;
+    }
+
+    protected virtual float GetDirectionFloat(float value, AxisOptions snapAxis) 
+    {
+        return value;
     }
 }
 
