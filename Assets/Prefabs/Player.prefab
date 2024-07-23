@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3280176770742370801}
   - component: {fileID: 1512865313414756341}
   - component: {fileID: 3325833374561005097}
+  - component: {fileID: -1865758270420141016}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -120,6 +121,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c9114cafbde3541a04f48b03671b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joy: {fileID: 4592895854222819876, guid: 250c3d2064125a0489307f542d66c737, type: 3}
-  panX: 2
-  panY: 2
+  speed: 5
+  joystick: {fileID: 0}
+--- !u!54 &-1865758270420141016
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2960473355235908814}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0

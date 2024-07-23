@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public int Col { get { return col; } }
 
     //temp code
-    public DirectionJoystick joy;
+    public VariableJoystick joy;
 
     public static GameManager Instance
     {
@@ -84,6 +84,6 @@ public class GameManager : MonoBehaviour
     {
         var temp = Instantiate(character);
         temp.transform.position = new Vector3((1.5f * (row / 2)), 0.75f, (1.5f * (col / 2)));
-        temp.GetComponent<Character>().joy = joy;
+        temp.GetComponent<Character>().joystick = joy;
     }
 }

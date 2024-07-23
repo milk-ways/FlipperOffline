@@ -2,79 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
-    private Animation anim;
-    private bool move;
-    private float moveTime = 2.0f;
+    [SerializeField]
+    private float speed;
+    
+    public VariableJoystick joystick;
+    public Button actionButton;
 
-    public DirectionJoystick joy;
-
-    public int panX = 2;
-    public int panY = 2;
+    private Rigidbody rigid;
 
     private void Awake()
     {
-        anim = GetComponent<Animation>();
-
-        panX = GameManager.Instance.Row / 2;
-        panY = GameManager.Instance.Col / 2;
-
-        //var temp = Instantiate(joy)
+        rigid = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
-        float x = joy.Horizontal;
-        float z = joy.Vertical;
-
-        Vector3 dir = new Vector3(x, 0, z);
-
-        if (!move && (x !=0 || z != 0) && joy.OverRestriction())
-        {
-            StartCoroutine(JumpMove(dir));
-        }
+        if(joystick != null)
+            Move();
     }
 
-    public IEnumerator Move(Vector3 dir)
+    private void Move()
     {
-        move = true;
+        float x = joystick.Horizontal;
+        float z = joystick.Vertical;
 
-        float elapsedTime = 0.0f;
+        Vector3 moveVec = new Vector3(x, 0, z) * speed * Time.deltaTime;
+        rigid.MovePosition(rigid.position + moveVec);
 
-        Vector3 currentPosition = transform.position;
-        Vector3 targetPosition = currentPosition + dir * 1.5f;
-
-        while (elapsedTime < moveTime)
-        {
-            transform.position = Vector3.Lerp(currentPosition, targetPosition, elapsedTime / moveTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.position = targetPosition;
-
-        move = false;
+        if (moveVec.sqrMagnitude == 0)
+            return;
     }
 
-    public IEnumerator JumpMove(Vector3 dir)
+    private void Action()
     {
-        move = true;
+        Debug.Log("ACTION");
+    }
 
-        Vector3 currentPosition = transform.position;
-        Vector3 targetPosition = currentPosition + dir * 1.5f;
+    private void OnTriggerEnter(Collider other)
+    {
+        var pan = other.gameObject.GetComponent<Pan>();
 
-        var tween = gameObject.transform.DOJump(targetPosition, 3f, 1, 2f);
-        yield return tween.WaitForCompletion();
-
-        transform.position = targetPosition;
-
-        panX += (int)dir.x;
-        panY += (int)dir.z;
-
-        GameManager.Instance.panManager.FlipPan(panX + panY * GameManager.Instance.Col);
-
-        move = false;
+        if (pan != null)
+        {
+            pan.Flip();
+        }
     }
 }
