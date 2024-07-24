@@ -1,0 +1,66 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraController : MonoBehaviour
+{
+    public GameObject Target;
+
+    private float offsetX = 0.0f;
+    private float offsetY = 4.0f;
+    private float offsetZ = -6.0f;
+
+    [SerializeField]
+    private float cameraSpeed = 10.0f;
+
+    private Vector3 targetPos;
+    [SerializeField]
+    private Vector3 minCameraBoundary;
+    [SerializeField]
+    private Vector3 maxCameraBoundary;
+
+    public void SetCameraBoundary()
+    {
+        Debug.Log(Camera.main.orthographicSize);
+        Debug.Log(Screen.height);
+        Debug.Log(Screen.width);
+        Debug.Log(Camera.main.orthographicSize * Screen.width / Screen.height);
+
+        float height = Camera.main.orthographicSize;
+        float width = height * Screen.width / Screen.height;
+
+
+
+        minCameraBoundary = new Vector3(
+            -width * GameManager.Instance.Col + offsetX,
+            offsetY,
+            -height * (GameManager.Instance.Row - 1) + offsetZ
+            );
+        maxCameraBoundary = new Vector3(
+            width * GameManager.Instance.Col + offsetX,
+            offsetY,
+            height * (GameManager.Instance.Row - 1) + offsetZ
+            );
+    }
+
+    private void FixedUpdate()
+    {
+        if (Target == null)
+            return;
+
+        targetPos = new Vector3(
+            Target.transform.position.x + offsetX,
+            Target.transform.position.y + offsetY,
+            Target.transform.position.z + offsetZ);
+
+        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * cameraSpeed);
+
+        float clampX = Mathf.Clamp(transform.position.x, minCameraBoundary.x, maxCameraBoundary.x);
+        float clampZ = Mathf.Clamp(transform.position.z, minCameraBoundary.z, maxCameraBoundary.z);
+
+        if (minCameraBoundary != null)
+        {
+            transform.position = new Vector3(clampX, transform.position.y, clampZ);
+        }
+    }
+}

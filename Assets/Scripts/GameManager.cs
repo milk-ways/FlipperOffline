@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         textManager.TimerStart(gameTime);
         panManager.GeneratePans(row, col);
         GenerateCharacter();
-        Camera.main.transform.position += Vector3.right * (row / 2) * 1.5f;
+        Camera.main.GetComponent<CameraController>().SetCameraBoundary();
     }
 
     public void GameEnd() 
@@ -85,5 +85,7 @@ public class GameManager : MonoBehaviour
         var temp = Instantiate(character);
         temp.transform.position = new Vector3((1.5f * (row / 2)), 0.75f, (1.5f * (col / 2)));
         temp.GetComponent<Character>().joystick = joy;
+
+        Camera.main.GetComponent<CameraController>().Target = temp;
     }
 }
