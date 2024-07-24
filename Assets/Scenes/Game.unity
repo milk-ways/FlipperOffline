@@ -291,7 +291,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -307,6 +307,7 @@ GameObject:
   - component: {fileID: 832882452}
   - component: {fileID: 832882451}
   - component: {fileID: 832882450}
+  - component: {fileID: 832882453}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -351,8 +352,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
-    height: 1
+    width: 9
+    height: 16
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -381,13 +382,29 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832882449}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09150162, y: 0, z: 0, w: 0.99580497}
-  m_LocalPosition: {x: 0, y: 3, z: -5}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalPosition: {x: 0, y: 4, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 10.5, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+--- !u!114 &832882453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832882449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a2db368d197a904da3344d653be5120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  cameraSpeed: 10
+  minCameraBoundary: {x: 0, y: 0, z: 0}
+  maxCameraBoundary: {x: 0, y: 0, z: 0}
 --- !u!1 &910358921
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,8 +437,8 @@ MonoBehaviour:
   panManager: {fileID: 1835684387}
   textManager: {fileID: 114388907}
   character: {fileID: 2960473355235908814, guid: 1a8e91d938774314e8ff8caf3b0b636d, type: 3}
-  row: 1
-  col: 1
+  row: 3
+  col: 3
   gameTime: 15
   joy: {fileID: 95900446}
 --- !u!4 &910358923
@@ -655,7 +672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 634782024290687388, guid: 1a8e91d938774314e8ff8caf3b0b636d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.75
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 634782024290687388, guid: 1a8e91d938774314e8ff8caf3b0b636d, type: 3}
       propertyPath: m_LocalPosition.z
