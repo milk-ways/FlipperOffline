@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     //temp code
     public VariableJoystick joy;
+    public Button btn;
 
     public static GameManager Instance
     {
@@ -84,7 +86,8 @@ public class GameManager : MonoBehaviour
     {
         var temp = Instantiate(character);
         temp.transform.position = new Vector3((1.5f * (row / 2)), 0.75f, (1.5f * (col / 2)));
-        temp.GetComponent<Character>().joystick = joy;
+        //temp.GetComponent<Character>().joystick = joy;
+        temp.GetComponent<Character>().AssignUI(joy, btn);
 
         Camera.main.GetComponent<CameraController>().Target = temp;
     }
