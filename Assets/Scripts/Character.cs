@@ -15,6 +15,9 @@ public class Character : MonoBehaviour
     private Rigidbody rigid;
 
     private float attackPower = 10f;
+    private bool isCool = false;
+    private float cooltime;
+    protected float maxCooltime = 5f;
 
     private void Awake()
     {
@@ -55,6 +58,8 @@ public class Character : MonoBehaviour
         Debug.Log("ACTION");
 
         Attack();
+
+        StartCoroutine(CoolTime());
     }
 
     private void Attack()
@@ -70,6 +75,22 @@ public class Character : MonoBehaviour
 
             coll.GetComponent<Rigidbody>().AddForce(dir, ForceMode.Impulse);
         }
+    }
+
+    public IEnumerator CoolTime()
+    {
+        actionButton.enabled = false;
+        cooltime = 0f;
+
+        while (cooltime < maxCooltime)
+        {
+            cooltime += Time.deltaTime;
+            actionButton.GetComponent<Image>().fillAmount = cooltime / maxCooltime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        actionButton.GetComponent<Image>().fillAmount = 1;
+        actionButton.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)

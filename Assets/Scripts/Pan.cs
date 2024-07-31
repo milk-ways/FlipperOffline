@@ -8,6 +8,8 @@ public class Pan : MonoBehaviour
     private Color flipedColor = Color.red;
     private Color nonFlippedColor = Color.blue;
 
+    private bool isStatic = false;
+
     [SerializeField]
     private Renderer panColor;
 
@@ -16,8 +18,26 @@ public class Pan : MonoBehaviour
         panColor.material.color = nonFlippedColor;
     }
 
+    public IEnumerator StaticlizePan(float maxTime)
+    {
+        isStatic = true;
+        float activateTime = 0f;
+
+        while (activateTime < maxTime)
+        {
+            activateTime += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        isStatic = false;
+
+    }
+
     public void Flip()
     {
+        if (isStatic)
+            return;
+
         isFlipped = !isFlipped;
 
         if (isFlipped)
