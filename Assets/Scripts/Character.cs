@@ -15,9 +15,10 @@ public class Character : MonoBehaviour
     private Rigidbody rigid;
 
     private float attackPower = 10f;
-    private bool isCool = false;
     private float cooltime;
     protected float maxCooltime = 5f;
+
+    public Team team = 0;
 
     private void Awake()
     {
@@ -103,3 +104,9 @@ public class Character : MonoBehaviour
         }
     }
 }
+
+public enum Team
+{
+    blue = 0,
+    red = 1
+};
