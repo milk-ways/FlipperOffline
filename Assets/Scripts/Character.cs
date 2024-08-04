@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using Fusion;
 
-public class Character : MonoBehaviour
+public class Character : NetworkBehaviour
 {
     [SerializeField]
     private float speed;

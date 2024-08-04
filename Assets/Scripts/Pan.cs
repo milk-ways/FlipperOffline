@@ -1,8 +1,9 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pan : MonoBehaviour
+public class Pan : NetworkBehaviour
 {
     public bool isFlipped = false;
     private Color flipedColor = Color.red;

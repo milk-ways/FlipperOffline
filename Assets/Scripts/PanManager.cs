@@ -23,9 +23,8 @@ public class PanManager : MonoBehaviour
         {
             for (int j = 0; j < col; j++)
             {
-                var temp = Instantiate(pan);
+                var temp = NetworkRunnerHandler.Instance.networkRunner.Spawn(pan, new Vector3(1.5f * j, 0, 1.5f * i));
                 temp.transform.parent = gameObject.transform;
-                temp.gameObject.transform.position = new Vector3(1.5f * j, 0, 1.5f * i);
                 panGroup.Add(temp.GetComponent<Pan>());
             }
         }
