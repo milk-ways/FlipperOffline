@@ -68,11 +68,6 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         });
     }
 
-    public async void DisconnectLocalPlayer()
-    {
-        await networkRunner.Shutdown();
-    }
-
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
     {
 
@@ -85,14 +80,16 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        if (player == runner.LocalPlayer)
+        if(player == runner.LocalPlayer)
         {
-            runner.Spawn(PlayerPrefab, Vector3.up, Quaternion.identity);
+            var localCharacter = runner.Spawn(PlayerPrefab, Vector3.up, Quaternion.identity);
+            runner.SetPlayerObject(player, localCharacter);
         }
 
         if (networkRunner.SessionInfo.PlayerCount == networkRunner.SessionInfo.MaxPlayers)
         {
-            SceneManager.LoadScene("Game");
+            //SceneManager.LoadScene("Game");
+            GameManager.Instance.GameStart();
         }
     }
 

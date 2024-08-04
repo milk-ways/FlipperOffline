@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Fusion;
+using System;
 
 public class GameManager : NetworkBehaviour
 {
@@ -23,10 +24,12 @@ public class GameManager : NetworkBehaviour
 
     public int Row { get { return row; } }
     public int Col { get { return col; } }
-
+    public int GameTime => gameTime;
     //temp code
     public VariableJoystick joy;
     public Button btn;
+
+    public Action OnGameStart;
 
     public static GameManager Instance
     {
@@ -63,14 +66,16 @@ public class GameManager : NetworkBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            GameStart();
+            //GameStart();
         }
     }
 
-    private void GameStart()
+    public void GameStart()
     {
-        textManager.TimerStart(gameTime);
-        panManager.GeneratePans(row, col);
+        if (!NetworkRunnerHandler.Instance.networkRunner.IsSharedModeMasterClient) return;
+
+        OnGameStart?.Invoke();
+        
         GenerateCharacter();
         Camera.main.GetComponent<CameraController>().SetCameraBoundary();
     }
@@ -85,11 +90,13 @@ public class GameManager : NetworkBehaviour
 
     private void GenerateCharacter()
     {
-        var temp = Instantiate(character);
-        temp.transform.position = new Vector3((1.5f * (row / 2)), 0.75f, (1.5f * (col / 2)));
-        //temp.GetComponent<Character>().joystick = joy;
-        temp.GetComponent<Character>().AssignUI(joy, btn);
+        NetworkRunner runner = NetworkRunnerHandler.Instance.networkRunner;
+        var localCharacter = runner.GetPlayerObject(runner.LocalPlayer);
 
-        Camera.main.GetComponent<CameraController>().Target = temp;
+        localCharacter.transform.position = new Vector3((1.5f * (row / 2)), 0.75f, (1.5f * (col / 2)));
+        //temp.GetComponent<Character>().joystick = joy;
+        localCharacter.GetComponent<Character>().AssignUI(joy, btn);
+
+        Camera.main.GetComponent<CameraController>().Target = localCharacter.gameObject;
     }
 }

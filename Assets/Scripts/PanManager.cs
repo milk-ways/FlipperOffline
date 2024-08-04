@@ -17,8 +17,16 @@ public class PanManager : MonoBehaviour
 
     public bool IsRedWin { get { return redPanCount > bluePanCount; } }
 
-    public void GeneratePans(int row, int col)
+    private void Start()
     {
+        GameManager.Instance.OnGameStart += GeneratePans;
+    }
+
+
+    public void GeneratePans()
+    {
+        int row = GameManager.Instance.Row;
+        int col = GameManager.Instance.Col;
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)

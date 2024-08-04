@@ -6,18 +6,23 @@ using TMPro;
 
 public class TextManager : MonoBehaviour
 {
-    [SerializeField]
-    private TextMeshProUGUI timeText;
-    [SerializeField]
-    private TextMeshProUGUI resultText;
+    
+    public TextMeshProUGUI timeText;
+    
+    public TextMeshProUGUI resultText;
 
     private float time;
 
     private bool gameOver = true;
 
-    public void TimerStart(float gameTime)
+    private void Start()
     {
-        time = gameTime;
+        GameManager.Instance.OnGameStart += TimerStart;
+    }
+
+    public void TimerStart()
+    {
+        time = GameManager.Instance.GameTime;
         timeText.gameObject.SetActive(true);
         gameOver = false;
     }
