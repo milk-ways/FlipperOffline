@@ -21,6 +21,8 @@ public class Character : NetworkBehaviour
 
     public Team team = 0;
 
+    private bool isGround = false;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -31,8 +33,25 @@ public class Character : NetworkBehaviour
 
     private void FixedUpdate()
     {
+        if (transform.position.y <= -1f)
+        {
+            Revive();
+        }
+
         if(joystick != null)
             Move();
+    }
+
+    private void Revive()
+    {
+        isGround = false;
+
+        float temp = -TempGameManager.Instance.panManager.blank / 2f;
+
+        float clampX = Mathf.Clamp(transform.position.x, 0.5f + temp, TempGameManager.Instance.Col * TempGameManager.Instance.panManager.blank - 0.5f + temp);
+        float clampZ = Mathf.Clamp(transform.position.z, 0.5f + temp, TempGameManager.Instance.Row * TempGameManager.Instance.panManager.blank - 0.5f + temp);
+        
+        transform.position = new Vector3(clampX, 4f, clampZ);
     }
 
     public void AssignUI(VariableJoystick joy, Button btn)
@@ -45,8 +64,11 @@ public class Character : NetworkBehaviour
 
     private void Move()
     {
-        float x = joystick.Horizontal;
-        float z = joystick.Vertical;
+        if (!isGround)
+            return;
+
+        float x = team == 0 ? joystick.Horizontal : -joystick.Horizontal;
+        float z = team == 0 ? joystick.Vertical : -joystick.Vertical;
 
         Vector3 moveVec = new Vector3(x, 0, z) * speed * Time.deltaTime;
         rigid.MovePosition(rigid.position + moveVec);
@@ -102,6 +124,13 @@ public class Character : NetworkBehaviour
         if (pan != null)
         {
             pan.Flip();
+        }
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGround = true;
         }
     }
 }

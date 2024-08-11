@@ -17,12 +17,20 @@ public class TextManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OnGameStart += TimerStart;
+        //GameManager.Instance.OnGameStart += TimerStart;
+        TempGameManager.Instance.OnGameStart += NoNetworkTimerStart;
     }
 
     public void TimerStart()
     {
         time = GameManager.Instance.GameTime;
+        timeText.gameObject.SetActive(true);
+        gameOver = false;
+    }
+
+    public void NoNetworkTimerStart()
+    {
+        time = TempGameManager.Instance.GameTime;
         timeText.gameObject.SetActive(true);
         gameOver = false;
     }
@@ -37,7 +45,8 @@ public class TextManager : MonoBehaviour
         {
             if (!gameOver)
             {
-                GameManager.Instance.GameEnd();
+                GameManager.Instance?.GameEnd();
+                TempGameManager.Instance?.GameEnd();
                 gameOver = true;
             }
         }
