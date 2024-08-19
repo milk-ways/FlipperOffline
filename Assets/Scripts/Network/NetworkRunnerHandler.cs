@@ -16,6 +16,8 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public GameObject PlayerPrefab;
 
+    public NetworkObject LocalCharacter;
+
     private void Awake()
     {
         if (Instance == null)
@@ -83,7 +85,9 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         if(player == runner.LocalPlayer)
         {
             var localCharacter = runner.Spawn(PlayerPrefab, Vector3.up, Quaternion.identity);
+            Debug.Log($"Spawn Character : {runner.LocalPlayer}");
             runner.SetPlayerObject(player, localCharacter);
+            LocalCharacter = localCharacter;
         }
 
         if (networkRunner.SessionInfo.PlayerCount == networkRunner.SessionInfo.MaxPlayers)

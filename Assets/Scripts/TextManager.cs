@@ -17,8 +17,8 @@ public class TextManager : MonoBehaviour
 
     private void Start()
     {
-        //GameManager.Instance.OnGameStart += TimerStart;
-        TempGameManager.Instance.OnGameStart += NoNetworkTimerStart;
+        GameManager.Instance.OnGameStart += TimerStart;
+        //TempGameManager.Instance.OnGameStart += NoNetworkTimerStart;
     }
 
     public void TimerStart()

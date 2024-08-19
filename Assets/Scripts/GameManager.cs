@@ -62,22 +62,15 @@ public class GameManager : NetworkBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            //GameStart();
-        }
-    }
-
     public void GameStart()
     {
-        if (!NetworkRunnerHandler.Instance.networkRunner.IsSharedModeMasterClient) return;
-
-        OnGameStart?.Invoke();
-        
         GenerateCharacter();
         Camera.main.GetComponent<CameraController>().SetCameraBoundary();
+
+        if (NetworkRunnerHandler.Instance.networkRunner.IsSharedModeMasterClient)
+        {
+            OnGameStart?.Invoke();
+        }   
     }
 
     public void GameEnd() 
@@ -91,7 +84,12 @@ public class GameManager : NetworkBehaviour
     private void GenerateCharacter()
     {
         NetworkRunner runner = NetworkRunnerHandler.Instance.networkRunner;
-        var localCharacter = runner.GetPlayerObject(runner.LocalPlayer);
+        //var localCharacter = runner.GetPlayerObject(runner.LocalPlayer);
+        var localCharacter = NetworkRunnerHandler.Instance.LocalCharacter;
+
+        Debug.Log(runner.LocalPlayer);
+
+        if (localCharacter == null) return;
 
         localCharacter.transform.position = new Vector3((1.5f * (row / 2)), 0.75f, (1.5f * (col / 2)));
         //temp.GetComponent<Character>().joystick = joy;
