@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using Fusion;
 
-public class Character : NetworkBehaviour
+public class Character : SimulationBehaviour
 {
     [SerializeField]
     private float speed;

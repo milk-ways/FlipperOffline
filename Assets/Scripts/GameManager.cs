@@ -13,8 +13,6 @@ public class GameManager : NetworkBehaviour
     public PanManager panManager;
     public TextManager textManager;
 
-    public GameObject character;
-
     [SerializeField]
     private int row;
     [SerializeField]
@@ -84,15 +82,12 @@ public class GameManager : NetworkBehaviour
     private void GenerateCharacter()
     {
         NetworkRunner runner = NetworkRunnerHandler.Instance.networkRunner;
-        //var localCharacter = runner.GetPlayerObject(runner.LocalPlayer);
         var localCharacter = NetworkRunnerHandler.Instance.LocalCharacter;
-
-        Debug.Log(runner.LocalPlayer);
 
         if (localCharacter == null) return;
 
-        localCharacter.transform.position = new Vector3((1.5f * (row / 2)), 0.75f, (1.5f * (col / 2)));
-        //temp.GetComponent<Character>().joystick = joy;
+        //localCharacter.transform.position = new Vector3((1.5f * (row / 2)), 0.75f, (1.5f * (col / 2)));
+        localCharacter.transform.position = new Vector3(5f, 0.75f, 5f);
         localCharacter.GetComponent<Character>().AssignUI(joy, btn);
 
         Camera.main.GetComponent<CameraController>().Target = localCharacter.gameObject;

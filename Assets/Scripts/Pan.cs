@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class Pan : NetworkBehaviour
 {
-    public bool isFlipped = false;
+    [Networked, OnChangedRender(nameof(InternalFlip))]
+    public bool isFlipped { get; set; } = false;
+  
     private Color flipedColor = Color.red;
     private Color nonFlippedColor = Color.blue;
 
@@ -31,15 +33,12 @@ public class Pan : NetworkBehaviour
         }
 
         isStatic = false;
-
     }
-
-    public void Flip()
+   
+    private void InternalFlip()
     {
         if (isStatic)
             return;
-
-        isFlipped = !isFlipped;
 
         if (isFlipped)
         {
@@ -49,5 +48,12 @@ public class Pan : NetworkBehaviour
         {
             panColor.material.color = nonFlippedColor;
         }
+    }
+
+    public void Flip()
+    {
+        if (!HasStateAuthority) return;
+
+        isFlipped = !isFlipped;
     }
 }
