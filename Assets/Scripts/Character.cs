@@ -146,8 +146,8 @@ public class Character : NetworkBehaviour, IPlayerJoined
     {
         if(Runner.LocalPlayer == player)
         {
-            AssignUI();
             team = (Team)(player.PlayerId % 2);
+            AssignUI();
         }
     }
 }
