@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Fusion;
 
 public class TextManager : MonoBehaviour
 {
-    
+    public bool isStarted { get; set; } = false;
+
     public TextMeshProUGUI timeText;
-    
     public TextMeshProUGUI resultText;
 
     private float time;
@@ -17,7 +18,7 @@ public class TextManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OnGameStart += TimerStart;
+        //GameManager.Instance.OnGameStart += () => isStarted = !isStarted;
         //TempGameManager.Instance.OnGameStart += NoNetworkTimerStart;
     }
 
@@ -68,5 +69,18 @@ public class TextManager : MonoBehaviour
             resultText.color = Color.blue;
             resultText.text = str + "\nBLUE WIN!";
         }
+    }
+
+    public IEnumerator ShowReadyText(int time)
+    {
+        resultText.gameObject.SetActive(true);
+        float timer = time;
+        while(timer > 0 && GameManager.Instance.WaitingForStart)
+        {
+            resultText.text = $"Game Starts in {Mathf.Ceil(timer)}...";
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+        resultText.gameObject.SetActive(false);
     }
 }

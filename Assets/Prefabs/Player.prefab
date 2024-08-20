@@ -123,10 +123,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c9114cafbde3541a04f48b03671b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 100
   joystick: {fileID: 0}
   actionButton: {fileID: 0}
-  team: 0
+  team: 1
 --- !u!54 &-1865758270420141016
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -171,6 +171,7 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: 3325833374561005097}
   - {fileID: 3969989513934085476}
 --- !u!114 &3969989513934085476
 MonoBehaviour:

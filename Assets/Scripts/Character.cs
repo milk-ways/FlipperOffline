@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using Fusion;
 
-public class Character : SimulationBehaviour
+public class Character : NetworkBehaviour
 {
     [SerializeField]
     private float speed;
@@ -31,7 +31,7 @@ public class Character : SimulationBehaviour
         //    actionButton.onClick.AddListener(Action);
     }
 
-    private void FixedUpdate()
+    public override void FixedUpdateNetwork()
     {
         if (transform.position.y <= -1f)
         {
@@ -56,22 +56,31 @@ public class Character : SimulationBehaviour
 
     public void AssignUI(VariableJoystick joy, Button btn)
     {
-        joystick = joy;
-        actionButton = btn;
+        if (Runner.GetPlayerObject(Runner.LocalPlayer) != this) return;
 
-        actionButton.onClick.AddListener(Action);
+        Debug.Log("Assign");
+    }
+
+    public void AssignUI()
+    {
+        joystick = FindObjectOfType<VariableJoystick>();
+        Camera.main.GetComponent<CameraController>().SetCameraBoundary();
+        Camera.main.GetComponent<CameraController>().Target = gameObject;
     }
 
     private void Move()
     {
+        Debug.Log("Enter move");
         if (!isGround)
             return;
 
+        Debug.Log("Pass isGround");
         float x = team == 0 ? joystick.Horizontal : -joystick.Horizontal;
         float z = team == 0 ? joystick.Vertical : -joystick.Vertical;
 
         Vector3 moveVec = new Vector3(x, 0, z) * speed * Time.deltaTime;
-        rigid.MovePosition(rigid.position + moveVec);
+
+        transform.Translate(moveVec);
 
         if (moveVec.sqrMagnitude == 0)
             return;

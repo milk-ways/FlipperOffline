@@ -23,10 +23,9 @@ public class PanManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OnGameStart += GeneratePans;
+        //GameManager.Instance.OnGameStart += GeneratePans;
         //TempGameManager.Instance.OnGameStart += NoNetworkGeneratePans;
     }
-
 
     public void GeneratePans()
     {

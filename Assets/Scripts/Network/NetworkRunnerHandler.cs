@@ -15,6 +15,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     public NetworkRunner networkRunner;
 
     public GameObject PlayerPrefab;
+    public GameObject GameManagerPrefab;
 
     public NetworkObject LocalCharacter;
 
@@ -82,23 +83,42 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        if(player == runner.LocalPlayer)
+        if (runner.SessionInfo.PlayerCount == 1 && runner.IsSharedModeMasterClient)
+        {
+            runner.Spawn(GameManagerPrefab);
+        }
+
+        if (player == runner.LocalPlayer)
         {
             var localCharacter = runner.Spawn(PlayerPrefab, new Vector3(5f, 0.75f, 5f), Quaternion.identity);
             Debug.Log($"Spawn Character : {runner.LocalPlayer}");
             runner.SetPlayerObject(player, localCharacter);
             LocalCharacter = localCharacter;
+
+            Debug.Log(player);
+            localCharacter.GetComponent<Character>().AssignUI();
         }
 
-        if (networkRunner.SessionInfo.PlayerCount == networkRunner.SessionInfo.MaxPlayers)
+        if (runner.SessionInfo.PlayerCount == runner.SessionInfo.MaxPlayers)
         {
-            GameManager.Instance.GameStart();
+            GameManager.Instance.WaitingForStart = true;
         }
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
+        foreach(var item in runner.ActivePlayers)
+        {
+            if(item == player)
+            {
+                runner.Despawn(runner.GetPlayerObject(item));
+            }
+        }
 
+        if(runner.IsSharedModeMasterClient)
+        {
+            GameManager.Instance.WaitingForStart = false;
+        }
     }
 
     public void OnInput(NetworkRunner runner, NetworkInput input)

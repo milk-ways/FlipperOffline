@@ -97,7 +97,6 @@ public class TempGameManager : MonoBehaviour
             localCharacter.GetComponent<MeshRenderer>().material.color = Color.red;
         }
 
-            //temp.GetComponent<Character>().joystick = joy;
         localCharacter.GetComponent<Character>().AssignUI(joy, btn);
 
         Camera.main.GetComponent<CameraController>().Target = localCharacter.gameObject;

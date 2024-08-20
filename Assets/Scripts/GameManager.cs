@@ -5,11 +5,10 @@ using UnityEngine.UI;
 using Fusion;
 using System;
 
-public class GameManager : NetworkBehaviour
+public class GameManager : NetworkBehaviour, ISpawned
 {
     private static GameManager _instance;
 
-    //public PanGroup panGroup;
     public PanManager panManager;
     public TextManager textManager;
 
@@ -29,6 +28,10 @@ public class GameManager : NetworkBehaviour
 
     public Action OnGameStart;
 
+    public bool WaitingForStart { get; set; } = false;
+
+    [SerializeField] private int delayBeforeStart = 5;
+
     public static GameManager Instance
     {
         get
@@ -45,26 +48,19 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-    private void Awake()
+    public override void Spawned()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
-        else if (_instance != this)
-        {
-            Destroy(gameObject);
-        }
-        // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
-        DontDestroyOnLoad(gameObject);
+        panManager = FindObjectOfType<PanManager>();
+        textManager = FindObjectOfType<TextManager>();
+        joy = FindObjectOfType<VariableJoystick>();
+
+        OnGameStart += panManager.GeneratePans;
+        OnGameStart += () => textManager.isStarted = !textManager.isStarted;
     }
 
     public void GameStart()
     {
-        GenerateCharacter();
-        Camera.main.GetComponent<CameraController>().SetCameraBoundary();
-
+        SetCharacterPos();
         if (NetworkRunnerHandler.Instance.networkRunner.IsSharedModeMasterClient)
         {
             OnGameStart?.Invoke();
@@ -79,17 +75,20 @@ public class GameManager : NetworkBehaviour
         textManager.GameOver(str, panManager.IsRedWin);
     }
 
-    private void GenerateCharacter()
+    private void SetCharacterPos()
     {
-        NetworkRunner runner = NetworkRunnerHandler.Instance.networkRunner;
         var localCharacter = NetworkRunnerHandler.Instance.LocalCharacter;
 
         if (localCharacter == null) return;
-
-        //localCharacter.transform.position = new Vector3((1.5f * (row / 2)), 0.75f, (1.5f * (col / 2)));
-        localCharacter.transform.position = new Vector3(5f, 0.75f, 5f);
-        localCharacter.GetComponent<Character>().AssignUI(joy, btn);
-
-        Camera.main.GetComponent<CameraController>().Target = localCharacter.gameObject;
+        if (localCharacter.GetComponent<Character>().team == 0)
+        {
+            localCharacter.transform.position = new Vector3((panManager.blank * (col / 2)), 4.5f, 0f);
+            localCharacter.GetComponent<MeshRenderer>().material.color = Color.blue;
+        }
+        else
+        {
+            localCharacter.transform.position = new Vector3((panManager.blank * (col / 2)), 4.5f, panManager.blank * (row - 1));
+            localCharacter.GetComponent<MeshRenderer>().material.color = Color.red;
+        }
     }
 }
