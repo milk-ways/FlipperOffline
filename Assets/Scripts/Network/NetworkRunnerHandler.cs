@@ -98,6 +98,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         if (runner.SessionInfo.PlayerCount == runner.SessionInfo.MaxPlayers)
         {
             //GameManager.Instance.WaitingForStart = true;
+            GameManager.Instance.GameStart();
         }
     }
 

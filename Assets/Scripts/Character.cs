@@ -10,7 +10,7 @@ public class Character : NetworkBehaviour, IPlayerJoined
     [SerializeField]
     private float speed;
     
-    public VariableJoystick joystick;
+    public VariableJoystick joystick;   
     public Button actionButton;
 
     private Rigidbody rigid;
@@ -46,10 +46,10 @@ public class Character : NetworkBehaviour, IPlayerJoined
     {
         isGround = false;
 
-        float temp = -TempGameManager.Instance.panManager.blank / 2f;
+        float temp = -GameManager.Instance.panManager.blank / 2f;
 
-        float clampX = Mathf.Clamp(transform.position.x, 0.5f + temp, TempGameManager.Instance.Col * TempGameManager.Instance.panManager.blank - 0.5f + temp);
-        float clampZ = Mathf.Clamp(transform.position.z, 0.5f + temp, TempGameManager.Instance.Row * TempGameManager.Instance.panManager.blank - 0.5f + temp);
+        float clampX = Mathf.Clamp(transform.position.x, 0.5f + temp, GameManager.Instance.Col * GameManager.Instance.panManager.blank - 0.5f + temp);
+        float clampZ = Mathf.Clamp(transform.position.z, 0.5f + temp, GameManager.Instance.Row * GameManager.Instance.panManager.blank - 0.5f + temp);
         
         transform.position = new Vector3(clampX, 4f, clampZ);
     }
@@ -143,7 +143,6 @@ public class Character : NetworkBehaviour, IPlayerJoined
 
     public void PlayerJoined(PlayerRef player)
     {
-        Debug.Log(player);
         if(Runner.LocalPlayer == player)
         {
             AssignUI();

@@ -8,7 +8,7 @@ public class Pan : NetworkBehaviour
     [Networked, OnChangedRender(nameof(InternalFlip))]
     public bool isFlipped { get; set; } = false;
   
-    private Color flipedColor = Color.red;
+    private Color flippedColor = Color.red;
     private Color nonFlippedColor = Color.blue;
 
     private bool isStatic = false;
@@ -42,7 +42,7 @@ public class Pan : NetworkBehaviour
 
         if (isFlipped)
         {
-            panColor.material.color = flipedColor;
+            panColor.material.color = flippedColor;
         }
         else
         {
@@ -52,7 +52,19 @@ public class Pan : NetworkBehaviour
 
     public void Flip()
     {
-        if (!HasStateAuthority) return;
+
+        if (!HasStateAuthority)
+        {
+            if (!isFlipped)
+            {
+                panColor.material.color = flippedColor;
+            }
+            else
+            {
+                panColor.material.color = nonFlippedColor;
+            }
+            return;
+        }
 
         isFlipped = !isFlipped;
     }

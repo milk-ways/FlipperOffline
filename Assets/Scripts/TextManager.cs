@@ -16,12 +16,6 @@ public class TextManager : MonoBehaviour
 
     private bool gameOver = true;
 
-    private void Start()
-    {
-        //GameManager.Instance.OnGameStart += () => isStarted = !isStarted;
-        //TempGameManager.Instance.OnGameStart += NoNetworkTimerStart;
-    }
-
     public void TimerStart()
     {
         time = GameManager.Instance.GameTime;

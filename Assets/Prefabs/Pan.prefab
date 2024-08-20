@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad0c05399b9355340baef42b78dab5c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFlipped: 0
+  _isFlipped: 0
   panColor: {fileID: 9036189587997081618}
 --- !u!114 &953040243532865306
 MonoBehaviour:
@@ -156,4 +156,4 @@ MonoBehaviour:
   SyncScale: 0
   SyncParent: 0
   _autoAOIOverride: 1
-  DisableSharedModeInterpolation: 0
+  DisableSharedModeInterpolation: 1

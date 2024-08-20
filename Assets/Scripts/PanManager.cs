@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
 public class PanManager : MonoBehaviour
 {
@@ -21,12 +22,6 @@ public class PanManager : MonoBehaviour
 
     public bool IsRedWin { get { return redPanCount > bluePanCount; } }
 
-    private void Start()
-    {
-        //GameManager.Instance.OnGameStart += GeneratePans;
-        //TempGameManager.Instance.OnGameStart += NoNetworkGeneratePans;
-    }
-
     public void GeneratePans()
     {
         int row = GameManager.Instance.Row;
@@ -35,11 +30,14 @@ public class PanManager : MonoBehaviour
         {
             for (int j = 0; j < col; j++)
             {
-                var temp = NetworkRunnerHandler.Instance.networkRunner.Spawn(pan, new Vector3(1.5f * j, 0, 1.5f * i));
+                var temp = NetworkRunnerHandler.Instance.networkRunner.Spawn(pan, new Vector3(blank * j, 0, blank * i));
                 temp.transform.parent = gameObject.transform;
                 panGroup.Add(temp.GetComponent<Pan>());
             }
         }
+
+        plane.transform.localScale = new Vector3(blank * 0.1f * col, 1f, blank * 0.1f * row);
+        plane.transform.position = new Vector3(blank * (col / 2), 0f, blank * (row / 2));
     }
 
     public void NoNetworkGeneratePans()
