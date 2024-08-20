@@ -95,11 +95,17 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             runner.SetPlayerObject(player, localCharacter);
         }
 
-        if (runner.SessionInfo.PlayerCount == runner.SessionInfo.MaxPlayers)
+        if (runner.SessionInfo.PlayerCount == runner.SessionInfo.MaxPlayers && runner.IsSharedModeMasterClient)
         {
             //GameManager.Instance.WaitingForStart = true;
-            GameManager.Instance.GameStart();
+            StartCoroutine(Wait());
         }
+    }
+
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2f);
+        GameManager.Instance.GameStart();
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)

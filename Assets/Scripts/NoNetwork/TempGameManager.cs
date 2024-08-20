@@ -71,7 +71,7 @@ public class TempGameManager : MonoBehaviour
         OnGameStart?.Invoke();
         
         GenerateCharacter();
-        Camera.main.GetComponent<CameraController>().NoNetworkSetCameraBoundary();
+        Camera.main.GetComponent<CameraController>().SetCameraBoundary();
     }
 
     public void GameEnd() 

@@ -19,7 +19,8 @@ public class Character : NetworkBehaviour, IPlayerJoined
     private float cooltime;
     protected float maxCooltime = 5f;
 
-    public Team team = 0;
+    [Networked]
+    public Team team { get; set; } = 0;
 
     private bool isGround = false;
 
@@ -64,8 +65,8 @@ public class Character : NetworkBehaviour, IPlayerJoined
     public void AssignUI()
     {
         joystick = FindObjectOfType<VariableJoystick>();
-        Camera.main.GetComponent<CameraController>().SetCameraBoundary();
         Camera.main.GetComponent<CameraController>().Target = gameObject;
+        Camera.main.GetComponent<CameraController>().SetCameraBoundary();
     }
 
     private void Move()
@@ -146,6 +147,7 @@ public class Character : NetworkBehaviour, IPlayerJoined
         if(Runner.LocalPlayer == player)
         {
             AssignUI();
+            team = (Team)(player.PlayerId % 2);
         }
     }
 }

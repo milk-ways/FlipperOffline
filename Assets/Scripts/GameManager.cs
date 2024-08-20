@@ -52,17 +52,25 @@ public class GameManager : NetworkBehaviour, ISpawned
     {
         panManager = FindObjectOfType<PanManager>();
         textManager = FindObjectOfType<TextManager>();
-        joy = FindObjectOfType<VariableJoystick>();
 
         OnGameStart += panManager.GeneratePans;
         OnGameStart += () => textManager.isStarted = !textManager.isStarted;
     }
 
-    public void GameStart()
+
+    public void GameStart() => RpcGameStart();
+    [Rpc]
+    public void RpcGameStart()
     {
-        SetCharacterPos();
+        Debug.Log("GAME START");
+        //Action should be done on every single client
+        SetCharacterColor();
+        Camera.main.GetComponent<CameraController>().SetCameraBoundary();
+
+        //Action should be done only on MasterClient
         if (NetworkRunnerHandler.Instance.networkRunner.IsSharedModeMasterClient)
         {
+            SetCharacterPos();
             OnGameStart?.Invoke();
         }   
     }
@@ -83,12 +91,28 @@ public class GameManager : NetworkBehaviour, ISpawned
         if (localCharacter.GetComponent<Character>().team == 0)
         {
             localCharacter.transform.position = new Vector3((panManager.blank * (col / 2)), 4.5f, 0f);
-            localCharacter.GetComponent<MeshRenderer>().material.color = Color.blue;
         }
         else
         {
             localCharacter.transform.position = new Vector3((panManager.blank * (col / 2)), 4.5f, panManager.blank * (row - 1));
-            localCharacter.GetComponent<MeshRenderer>().material.color = Color.red;
+        }
+    }
+
+    private void SetCharacterColor()
+    {
+        foreach(var item in Runner.ActivePlayers)
+        {
+            Debug.Log(item);
+            var curCharacter = Runner.GetPlayerObject(item);
+            if (curCharacter == null) return;
+            if (curCharacter.GetComponent<Character>().team == 0)
+            {
+                curCharacter.GetComponent<MeshRenderer>().material.color = Color.blue;
+            }
+            else
+            {
+                curCharacter.GetComponent<MeshRenderer>().material.color = Color.red;
+            }
         }
     }
 }
