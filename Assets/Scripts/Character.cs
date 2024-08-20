@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using Fusion;
 
-public class Character : NetworkBehaviour
+public class Character : NetworkBehaviour, IPlayerJoined
 {
     [SerializeField]
     private float speed;
@@ -70,11 +70,9 @@ public class Character : NetworkBehaviour
 
     private void Move()
     {
-        Debug.Log("Enter move");
         if (!isGround)
             return;
 
-        Debug.Log("Pass isGround");
         float x = team == 0 ? joystick.Horizontal : -joystick.Horizontal;
         float z = team == 0 ? joystick.Vertical : -joystick.Vertical;
 
@@ -140,6 +138,15 @@ public class Character : NetworkBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGround = true;
+        }
+    }
+
+    public void PlayerJoined(PlayerRef player)
+    {
+        Debug.Log(player);
+        if(Runner.LocalPlayer == player)
+        {
+            AssignUI();
         }
     }
 }

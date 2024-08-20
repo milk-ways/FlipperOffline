@@ -77,7 +77,7 @@ public class GameManager : NetworkBehaviour, ISpawned
 
     private void SetCharacterPos()
     {
-        var localCharacter = NetworkRunnerHandler.Instance.LocalCharacter;
+        var localCharacter = NetworkRunnerHandler.Instance.networkRunner.GetPlayerObject(NetworkRunnerHandler.Instance.networkRunner.LocalPlayer);
 
         if (localCharacter == null) return;
         if (localCharacter.GetComponent<Character>().team == 0)

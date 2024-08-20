@@ -93,15 +93,11 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             var localCharacter = runner.Spawn(PlayerPrefab, new Vector3(5f, 0.75f, 5f), Quaternion.identity);
             Debug.Log($"Spawn Character : {runner.LocalPlayer}");
             runner.SetPlayerObject(player, localCharacter);
-            LocalCharacter = localCharacter;
-
-            Debug.Log(player);
-            localCharacter.GetComponent<Character>().AssignUI();
         }
 
         if (runner.SessionInfo.PlayerCount == runner.SessionInfo.MaxPlayers)
         {
-            GameManager.Instance.WaitingForStart = true;
+            //GameManager.Instance.WaitingForStart = true;
         }
     }
 

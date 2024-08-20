@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c9114cafbde3541a04f48b03671b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  speed: 20
   joystick: {fileID: 0}
   actionButton: {fileID: 0}
   team: 1
