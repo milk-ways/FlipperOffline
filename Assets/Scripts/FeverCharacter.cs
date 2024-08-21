@@ -6,11 +6,9 @@ public class FeverCharacter : Character
 {
     private bool isActivated = false;
 
-    protected override void Action()
+    protected override void CharacterAction()
     {
         StartCoroutine(AcitvateTime(5f));
-
-        StartCoroutine(CoolTime());
     }
 
     public IEnumerator AcitvateTime(float maxTime)

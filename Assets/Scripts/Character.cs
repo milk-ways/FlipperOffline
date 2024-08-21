@@ -4,8 +4,9 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using Fusion;
+using Unity.VisualScripting;
 
-public class Character : NetworkBehaviour, IPlayerJoined
+public abstract class Character : NetworkBehaviour, IPlayerJoined
 {
     [SerializeField]
     private float speed;
@@ -15,7 +16,6 @@ public class Character : NetworkBehaviour, IPlayerJoined
 
     private Rigidbody rigid;
 
-    private float attackPower = 10f;
     private float cooltime;
     protected float maxCooltime = 5f;
 
@@ -27,9 +27,6 @@ public class Character : NetworkBehaviour, IPlayerJoined
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-
-        //if(actionButton != null)
-        //    actionButton.onClick.AddListener(Action);
     }
 
     public override void FixedUpdateNetwork()
@@ -64,7 +61,12 @@ public class Character : NetworkBehaviour, IPlayerJoined
 
     public void AssignUI()
     {
-        joystick = FindObjectOfType<VariableJoystick>();
+        joystick = InputManager.Instance.joystick;
+        actionButton = InputManager.Instance.Button;
+        if (actionButton != null)
+        {
+            actionButton.onClick.AddListener(Ability);
+        }
         Camera.main.GetComponent<CameraController>().Target = gameObject;
         Camera.main.GetComponent<CameraController>().SetCameraBoundary();
     }
@@ -85,40 +87,26 @@ public class Character : NetworkBehaviour, IPlayerJoined
             return;
     }
 
-    protected virtual void Action()
+    protected abstract void CharacterAction();
+    protected virtual void Ability()
     {
         Debug.Log("ACTION");
 
-        Attack();
+        CharacterAction();
 
         StartCoroutine(CoolTime());
     }
 
-    private void Attack()
-    {
-        Collider[] colls = Physics.OverlapSphere(transform.position, 3f);
-
-        foreach (var coll in colls)
-        {
-            if (!coll.gameObject.CompareTag("Player"))
-                continue;
-
-            Vector3 dir = (coll.gameObject.transform.position - transform.position).normalized * attackPower; // 값은 characater 마다 다르게
-
-            coll.GetComponent<Rigidbody>().AddForce(dir, ForceMode.Impulse);
-        }
-    }
-
     public IEnumerator CoolTime()
     {
-        actionButton.enabled = false;
+        actionButton.enabled = false;   
         cooltime = 0f;
 
         while (cooltime < maxCooltime)
         {
             cooltime += Time.deltaTime;
             actionButton.GetComponent<Image>().fillAmount = cooltime / maxCooltime;
-            yield return new WaitForFixedUpdate();
+            yield return null;
         }
 
         actionButton.GetComponent<Image>().fillAmount = 1;

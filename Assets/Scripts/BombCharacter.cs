@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class BombCharacter : Character
 {
-    protected override void Action()
+    protected override void CharacterAction()
     {
-        Debug.Log("BOMB!");
-
-        Bomb();
+        Bomb(); 
     }
 
     private void Bomb()
