@@ -4,7 +4,6 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using Fusion;
-using Unity.VisualScripting;
 
 public abstract class Character : NetworkBehaviour, IPlayerJoined
 {
@@ -50,13 +49,6 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
         float clampZ = Mathf.Clamp(transform.position.z, 0.5f + temp, GameManager.Instance.Row * GameManager.Instance.panManager.blank - 0.5f + temp);
         
         transform.position = new Vector3(clampX, 4f, clampZ);
-    }
-
-    public void AssignUI(VariableJoystick joy, Button btn)
-    {
-        if (Runner.GetPlayerObject(Runner.LocalPlayer) != this) return;
-
-        Debug.Log("Assign");
     }
 
     public void AssignUI()

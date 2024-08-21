@@ -49,7 +49,7 @@ MonoBehaviour:
   textManager: {fileID: 0}
   row: 3
   col: 3
-  gameTime: 5
+  gameTime: 999
   _WaitingForStart: 0
   delayBeforeStart: 5
 --- !u!114 &8248002600919624746

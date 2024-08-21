@@ -99,7 +99,6 @@ public class GameManager : NetworkBehaviour, ISpawned
     [Rpc]
     public void RpcGameEnd(string str, bool res)
     {
-        Debug.Log("!!@#!@");
         textManager.GameOver(str, res);
     }
 

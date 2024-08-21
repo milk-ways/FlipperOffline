@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -1865758270420141016}
   - component: {fileID: 7935525686377253782}
   - component: {fileID: 6386561474746410212}
+  - component: {fileID: -3515233866455149823}
   m_Layer: 0
   m_Name: BombPlayer
   m_TagString: Player
@@ -149,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71a115225092e84da9295b896c1ff8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 10
   joystick: {fileID: 0}
   actionButton: {fileID: 0}
   _team: 0
@@ -171,3 +172,20 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 7935525686377253782}
+  - {fileID: -3515233866455149823}
+--- !u!114 &-3515233866455149823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2960473355235908814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 1
