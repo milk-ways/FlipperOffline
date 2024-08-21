@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using Fusion;
 
@@ -23,13 +22,6 @@ public class TextManager : MonoBehaviour
         gameOver = false;
     }
 
-    public void NoNetworkTimerStart()
-    {
-        time = TempGameManager.Instance.GameTime;
-        timeText.gameObject.SetActive(true);
-        gameOver = false;
-    }
-
     private void Update()
     {
         if (time > 0)
@@ -41,11 +33,9 @@ public class TextManager : MonoBehaviour
             if (!gameOver)
             {
                 GameManager.Instance?.GameEnd();
-                TempGameManager.Instance?.GameEnd();
                 gameOver = true;
             }
         }
-
         timeText.text = Mathf.Ceil(time).ToString();
     }
 
@@ -67,6 +57,7 @@ public class TextManager : MonoBehaviour
 
     public IEnumerator ShowReadyText(int time)
     {
+        Debug.Log(GameManager.Instance.WaitingForStart);
         resultText.gameObject.SetActive(true);
         float timer = time;
         while(timer > 0 && GameManager.Instance.WaitingForStart)

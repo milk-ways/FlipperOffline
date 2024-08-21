@@ -49,9 +49,8 @@ MonoBehaviour:
   textManager: {fileID: 0}
   row: 3
   col: 3
-  gameTime: 999
-  joy: {fileID: 0}
-  btn: {fileID: 0}
+  gameTime: 5
+  _WaitingForStart: 0
   delayBeforeStart: 5
 --- !u!114 &8248002600919624746
 MonoBehaviour:

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Fusion;
 using System;
 
@@ -22,12 +21,10 @@ public class GameManager : NetworkBehaviour, ISpawned
     public int Row { get { return row; } }
     public int Col { get { return col; } }
     public int GameTime => gameTime;
-    //temp code
-    public VariableJoystick joy;
-    public Button btn;
 
     public Action OnGameStart;
 
+    [Networked]
     public bool WaitingForStart { get; set; } = false;
 
     [SerializeField] private int delayBeforeStart = 5;
@@ -53,26 +50,40 @@ public class GameManager : NetworkBehaviour, ISpawned
         panManager = FindObjectOfType<PanManager>();
         textManager = FindObjectOfType<TextManager>();
 
-        OnGameStart += panManager.GeneratePans;
         OnGameStart += () => textManager.isStarted = !textManager.isStarted;
     }
 
-
-    public void GameStart() => RpcGameStart();
-    [Rpc]
-    public void RpcGameStart()
+    public void GameStart()
     {
         Debug.Log("GAME START");
         //Action should be done on every single client
         SetCharacterColor();
+        SetCharacterPos();
         Camera.main.GetComponent<CameraController>().SetCameraBoundary();
+        textManager.TimerStart();
 
         //Action should be done only on MasterClient
         if (NetworkRunnerHandler.Instance.networkRunner.IsSharedModeMasterClient)
         {
-            SetCharacterPos();
-            OnGameStart?.Invoke();
+            panManager.GeneratePans();
         }   
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RpcSetWaitingForStart(bool value)
+    {
+        WaitingForStart = value;
+        if(value)
+        {
+            StartCoroutine(GameStartEnum());
+        }
+    }
+
+    private IEnumerator GameStartEnum()
+    {
+        yield return StartCoroutine(textManager.ShowReadyText(delayBeforeStart));
+        if (!WaitingForStart) yield break;
+        GameStart();
     }
 
     public void GameEnd() 

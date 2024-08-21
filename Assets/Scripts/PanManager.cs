@@ -40,25 +40,6 @@ public class PanManager : MonoBehaviour
         plane.transform.position = new Vector3(blank * (col / 2), 0f, blank * (row / 2));
     }
 
-    public void NoNetworkGeneratePans()
-    {
-        int row = TempGameManager.Instance.Row;
-        int col = TempGameManager.Instance.Col;
-        for (int i = 0; i < row; i++)
-        {
-            for (int j = 0; j < col; j++)
-            {
-                var temp = Instantiate(pan);
-                temp.transform.parent = gameObject.transform;
-                temp.gameObject.transform.position = new Vector3(blank * j, 0, blank * i);
-                panGroup.Add(temp.GetComponent<Pan>());
-            }
-        }
-
-        plane.transform.localScale = new Vector3(blank * 0.1f * col, 1f, blank * 0.1f * row);
-        plane.transform.position = new Vector3(blank * (col / 2), 0f, blank * (row / 2));
-    }
-
     public void CountPanColor()
     {
         redPanCount = 0;

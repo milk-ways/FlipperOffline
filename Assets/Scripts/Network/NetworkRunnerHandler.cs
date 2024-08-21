@@ -94,18 +94,6 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             Debug.Log($"Spawn Character : {runner.LocalPlayer}");
             runner.SetPlayerObject(player, localCharacter);
         }
-
-        if (runner.SessionInfo.PlayerCount == runner.SessionInfo.MaxPlayers && runner.IsSharedModeMasterClient)
-        {
-            //GameManager.Instance.WaitingForStart = true;
-            StartCoroutine(Wait());
-        }
-    }
-
-    private IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(2f);
-        GameManager.Instance.GameStart();
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -191,7 +179,16 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
+        if (runner.SessionInfo.PlayerCount == runner.SessionInfo.MaxPlayers)
+        {
+            StartCoroutine(Wait());
+        }
+    }
 
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GameManager.Instance.RpcSetWaitingForStart(true);
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
