@@ -88,10 +88,19 @@ public class GameManager : NetworkBehaviour, ISpawned
 
     public void GameEnd() 
     {
-        panManager.CountPanColor();
+        if (!HasStateAuthority) return;
 
+        panManager.CountPanColor();
         string str = panManager.RedPanCount.ToString() + " : " + panManager.BluePanCount.ToString();
-        textManager.GameOver(str, panManager.IsRedWin);
+        Debug.Log(str);
+        RpcGameEnd(str, panManager.IsRedWin);
+    }
+
+    [Rpc]
+    public void RpcGameEnd(string str, bool res)
+    {
+        Debug.Log("!!@#!@");
+        textManager.GameOver(str, res);
     }
 
     private void SetCharacterPos()

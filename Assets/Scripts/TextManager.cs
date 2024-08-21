@@ -32,7 +32,8 @@ public class TextManager : MonoBehaviour
         {
             if (!gameOver)
             {
-                GameManager.Instance?.GameEnd();
+                Debug.Log("GAMEOVER");
+                GameManager.Instance.GameEnd();
                 gameOver = true;
             }
         }
