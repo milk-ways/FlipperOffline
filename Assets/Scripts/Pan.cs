@@ -52,7 +52,6 @@ public class Pan : NetworkBehaviour
 
     public void Flip()
     {
-
         if (!HasStateAuthority)
         {
             if (!isFlipped)
@@ -68,4 +67,24 @@ public class Pan : NetworkBehaviour
 
         isFlipped = !isFlipped;
     }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RpcFlip()
+    {
+        if (!HasStateAuthority)
+        {
+            if (!isFlipped)
+            {
+                panColor.material.color = flippedColor;
+            }
+            else
+            {
+                panColor.material.color = nonFlippedColor;
+            }
+            return;
+        }
+
+        isFlipped = !isFlipped;
+    }
+
 }

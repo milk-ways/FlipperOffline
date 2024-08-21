@@ -1,3 +1,4 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ public class BombCharacter : Character
 {
     protected override void CharacterAction()
     {
-        Bomb(); 
+        Bomb();
     }
 
     private void Bomb()
@@ -18,7 +19,7 @@ public class BombCharacter : Character
             if (!coll.gameObject.CompareTag("Pan"))
                 continue;
 
-            coll.GetComponent<Pan>().Flip();
+            coll.GetComponent<Pan>().RpcFlip();
         }
     }
 }

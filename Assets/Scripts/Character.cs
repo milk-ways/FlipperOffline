@@ -80,13 +80,16 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
             return;
     }
 
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RpcAddForce(Vector3 dir)
+    {
+        rigid.AddForce(dir, ForceMode.Impulse);
+    }
+
     protected abstract void CharacterAction();
     protected virtual void Ability()
     {
-        Debug.Log("ACTION");
-
         CharacterAction();
-
         StartCoroutine(CoolTime());
     }
 

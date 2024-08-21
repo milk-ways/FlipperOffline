@@ -19,14 +19,7 @@ public class AttackCharacter : Character
             Vector3 dir = (coll.gameObject.transform.position - transform.position).normalized * attackPower; // 값은 characater 마다 다르게
 
             Debug.Log(coll.gameObject.name);
-            coll.GetComponent<AttackCharacter>().RpcAddForce(dir);
+            coll.GetComponent<Character>().RpcAddForce(dir);
         }
     }
-
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RpcAddForce(Vector3 dir)
-    {
-        rigid.AddForce(dir, ForceMode.Impulse);
-    }
-
 }

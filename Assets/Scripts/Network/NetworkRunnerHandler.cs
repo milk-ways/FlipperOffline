@@ -14,7 +14,9 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     private INetworkSceneManager sceneManager;
     public NetworkRunner networkRunner;
 
-    public GameObject PlayerPrefab;
+    public GameObject[] PlayerPrefab;
+    public int SelectedPlayer = 0;
+
     public GameObject GameManagerPrefab;
 
     public NetworkObject LocalCharacter;
@@ -90,7 +92,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
         if (player == runner.LocalPlayer)
         {
-            var localCharacter = runner.Spawn(PlayerPrefab, new Vector3(5f, 0.75f, 5f), Quaternion.identity);
+            var localCharacter = runner.Spawn(PlayerPrefab[SelectedPlayer], new Vector3(5f, 0.75f, 5f), Quaternion.identity);
             Debug.Log($"Spawn Character : {runner.LocalPlayer}");
             runner.SetPlayerObject(player, localCharacter);
         }
