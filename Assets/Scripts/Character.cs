@@ -13,7 +13,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
     public VariableJoystick joystick;   
     public Button actionButton;
 
-    private Rigidbody rigid;
+    protected Rigidbody rigid;
 
     private float cooltime;
     protected float maxCooltime = 5f;
@@ -49,6 +49,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
         float clampZ = Mathf.Clamp(transform.position.z, 0.5f + temp, GameManager.Instance.Row * GameManager.Instance.panManager.blank - 0.5f + temp);
         
         transform.position = new Vector3(clampX, 4f, clampZ);
+        rigid.velocity = Vector3.zero;
     }
 
     public void AssignUI()

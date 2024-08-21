@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
 public class FeverCharacter : Character
 {
-    private bool isActivated = false;
+    [Networked]
+    private bool isActivated { get; set; } = false;
 
     protected override void CharacterAction()
     {
@@ -19,9 +21,8 @@ public class FeverCharacter : Character
         while (activateTime < maxTime)
         {
             activateTime += Time.deltaTime;
-            yield return new WaitForFixedUpdate();
+            yield return null;
         }
-
         isActivated = false;
     }
 

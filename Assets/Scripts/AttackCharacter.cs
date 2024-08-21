@@ -1,3 +1,4 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,14 @@ public class AttackCharacter : Character
             Vector3 dir = (coll.gameObject.transform.position - transform.position).normalized * attackPower; // 값은 characater 마다 다르게
 
             Debug.Log(coll.gameObject.name);
-            coll.GetComponent<Rigidbody>().AddForce(dir, ForceMode.Impulse);
+            coll.GetComponent<AttackCharacter>().RpcAddForce(dir);
         }
     }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RpcAddForce(Vector3 dir)
+    {
+        rigid.AddForce(dir, ForceMode.Impulse);
+    }
+
 }
