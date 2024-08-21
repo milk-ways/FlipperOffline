@@ -51,11 +51,14 @@ public class GameManager : NetworkBehaviour, ISpawned
         textManager = FindObjectOfType<TextManager>();
 
         OnGameStart += () => textManager.isStarted = !textManager.isStarted;
+
+        NetworkRunnerHandler.Instance.networkRunner.SessionInfo.IsOpen = true;
     }
 
     public void GameStart()
     {
         Debug.Log("GAME START");
+        
         //Action should be done on every single client
         SetCharacterColor();
         SetCharacterPos();
@@ -65,6 +68,7 @@ public class GameManager : NetworkBehaviour, ISpawned
         //Action should be done only on MasterClient
         if (NetworkRunnerHandler.Instance.networkRunner.IsSharedModeMasterClient)
         {
+            NetworkRunnerHandler.Instance.networkRunner.SessionInfo.IsOpen = false;
             panManager.GeneratePans();
         }   
     }

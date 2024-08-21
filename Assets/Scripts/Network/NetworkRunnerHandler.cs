@@ -87,6 +87,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (runner.SessionInfo.PlayerCount == 1 && runner.IsSharedModeMasterClient)
         {
+            runner.SessionInfo.IsOpen = false;
             runner.Spawn(GameManagerPrefab);
         }
 
@@ -108,7 +109,20 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             }
         }
 
-        if(runner.IsSharedModeMasterClient)
+        if (player == runner.LocalPlayer && runner.IsSharedModeMasterClient)
+        {
+            foreach (var item in runner.ActivePlayers)
+            {
+                if (item == player) continue;
+                if (runner.IsPlayerValid(item))
+                {
+                    runner.SetMasterClient(item);
+                    break;
+                }
+            }
+        }
+
+        if (runner.IsSharedModeMasterClient)
         {
             GameManager.Instance.WaitingForStart = false;
         }
