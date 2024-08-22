@@ -27,6 +27,7 @@ public class PanManager : NetworkBehaviour, ISpawned
 
     public override void Spawned()
     {
+        if (!HasStateAuthority) return;
         plane = NetworkRunnerHandler.Instance.networkRunner.Spawn(planePrefab, Vector3.zero);
     }
 

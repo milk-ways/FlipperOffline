@@ -22,4 +22,11 @@ public class InputManager : MonoBehaviour
 
     public VariableJoystick joystick;
     public Button Button;
+
+    public void Inactivate()
+    {
+        joystick.InitializeJoystick();
+        joystick.gameObject.SetActive(false);
+        Button.interactable = false;
+    }
 }

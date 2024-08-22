@@ -82,4 +82,9 @@ public class TextManager : MonoBehaviour
     {
         panSlider.value = value;
     }
+
+    public void ReturnToHome()
+    {
+        NetworkRunnerHandler.Instance.networkRunner.Shutdown();
+    }
 }

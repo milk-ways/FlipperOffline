@@ -47,9 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panManager: {fileID: 0}
   textManager: {fileID: 0}
-  row: 3
-  col: 3
-  gameTime: 999
+  row: 7
+  col: 7
+  gameTime: 60
   _WaitingForStart: 0
   delayBeforeStart: 5
 --- !u!114 &8248002600919624746
