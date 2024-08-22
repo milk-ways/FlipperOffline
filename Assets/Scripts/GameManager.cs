@@ -109,6 +109,7 @@ public class GameManager : NetworkBehaviour, ISpawned
     [Rpc]
     public void RpcGameEnd(string str, bool res)
     {
+        SoundManager.PlayEffect("result");
         InputManager.Instance.Inactivate();
         textManager.GameOver(str, res);
     }

@@ -15,6 +15,7 @@ public class BombCharacter : Character
     [Rpc]
     protected void RpcSyncAction()
     {
+        SoundManager.PlayEffect("bomb");
         abilityEffect.Play();
     }
 

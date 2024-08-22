@@ -45,6 +45,6 @@ public class FeverCharacter : Character
     [Rpc]
     protected void RpcSyncAction()
     {
-        
+        SoundManager.PlayEffect("fever");
     }
 }

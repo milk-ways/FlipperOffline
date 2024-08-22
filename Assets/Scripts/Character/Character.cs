@@ -50,7 +50,6 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
         {
             Move(data.direction);
 
-            Debug.Log(data.ability);
             if(data.ability)
             {
                 Ability();
@@ -92,8 +91,10 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
             return;
 
         Vector3 moveVec = dir * (team == Team.blue ? 1 : -1) * speed * Runner.DeltaTime;
+
+        if (moveVec.sqrMagnitude < 0.001f) return;
+
         transform.Translate(moveVec);
-        
         transform.GetChild(0).rotation = Quaternion.LookRotation(dir * (team == Team.blue ? 1 : -1));
     }
 

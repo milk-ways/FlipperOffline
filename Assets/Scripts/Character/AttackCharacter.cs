@@ -34,6 +34,7 @@ public class AttackCharacter : Character
     [Rpc]
     protected void RpcSyncAction()
     {
+        SoundManager.PlayEffect("attack");
         abilityEffect.Play();
     }
 }
