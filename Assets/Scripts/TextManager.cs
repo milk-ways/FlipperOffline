@@ -67,7 +67,6 @@ public class TextManager : MonoBehaviour
 
     public IEnumerator ShowReadyText(int time)
     {
-        Debug.Log(GameManager.Instance.WaitingForStart);
         alertText.gameObject.SetActive(true);
         float timer = time;
         while(timer > 0 && GameManager.Instance.WaitingForStart)

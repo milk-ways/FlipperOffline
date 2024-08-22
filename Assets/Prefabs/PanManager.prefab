@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pan: {fileID: 2295228052215818275, guid: e10e54d858fcfab498bbd6d4939fbfc3, type: 3}
-  plane: {fileID: 0}
+  planePrefab: {fileID: 8188790777792617923, guid: 2cdfbd8e6193e714487e75f193db4f9f, type: 3}
   _redPanCount: 0
   _bluePanCount: 0
   blank: 3

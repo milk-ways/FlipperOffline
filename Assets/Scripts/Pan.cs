@@ -35,7 +35,6 @@ public class Pan : NetworkBehaviour, ISpawned
         if (isStatic)
             return;
 
-        Debug.Log(isFlipped);
         if (isFlipped)
         {
             panColor.material.color = flippedColor;

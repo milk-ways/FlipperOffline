@@ -142,7 +142,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene("Title");
     }
 
     public void OnConnectedToServer(NetworkRunner runner)

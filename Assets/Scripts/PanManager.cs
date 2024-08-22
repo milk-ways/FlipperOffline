@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 
-public class PanManager : NetworkBehaviour
+public class PanManager : NetworkBehaviour, ISpawned
 { 
     private List<Pan> panGroup = new List<Pan>();
 
     [SerializeField]
     private GameObject pan;
     [SerializeField]
-    private GameObject plane;
+    private GameObject planePrefab;
+    public NetworkObject plane;
 
     [Networked, OnChangedRender(nameof(RpcOnChangeCount))]
     public int redPanCount { get; set; } = 0;
@@ -23,6 +24,11 @@ public class PanManager : NetworkBehaviour
     public int BluePanCount { get { return bluePanCount; } }
 
     public bool IsRedWin { get { return redPanCount > bluePanCount; } }
+
+    public override void Spawned()
+    {
+        plane = NetworkRunnerHandler.Instance.networkRunner.Spawn(planePrefab, Vector3.zero);
+    }
 
     public void GeneratePans()
     {
@@ -48,8 +54,8 @@ public class PanManager : NetworkBehaviour
         }
 
         RpcOnChangeCount();
-        //plane.transform.localScale = new Vector3(blank * 0.1f * col, 1f, blank * 0.1f * row);
-        //plane.transform.position = new Vector3(blank * (col / 2), 0f, blank * (row / 2));
+        plane.transform.localScale = new Vector3(blank * 0.1f * col, 1f, blank * 0.1f * row);
+        plane.transform.position = new Vector3(blank * (col / 2), 0f, blank * (row / 2));
     }
 
     public void CountPanColor()
