@@ -26,7 +26,7 @@ public class TextManager : MonoBehaviour
         time = GameManager.Instance.GameTime;
         timeText.gameObject.SetActive(true);
         panSlider.gameObject.SetActive(true);
-        panSlider.value = GameManager.Instance.panManager.BluePanCount / (GameManager.Instance.panManager.RedPanCount + GameManager.Instance.panManager.BluePanCount);
+        //panSlider.value = GameManager.Instance.panManager.BluePanCount / (GameManager.Instance.panManager.RedPanCount + GameManager.Instance.panManager.BluePanCount);
         gameOver = false;
     }
 

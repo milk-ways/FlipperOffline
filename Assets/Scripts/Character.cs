@@ -14,6 +14,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
     public Button actionButton;
 
     protected Rigidbody rigid;
+    protected Animator animator;
 
     private float cooltime;
     protected float maxCooltime = 5f;
@@ -28,6 +29,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
+        animator = transform.GetChild(0).GetComponent<Animator>();
     }
 
     public override void FixedUpdateNetwork()

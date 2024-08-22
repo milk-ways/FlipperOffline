@@ -16,11 +16,6 @@ public class Pan : NetworkBehaviour
     [SerializeField]
     private Renderer panColor;
 
-    private void Awake()
-    {
-        panColor.material.color = nonFlippedColor;
-    }
-
     public IEnumerator StaticlizePan(float maxTime)
     {
         isStatic = true;
