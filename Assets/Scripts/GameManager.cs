@@ -56,9 +56,7 @@ public class GameManager : NetworkBehaviour, ISpawned
     }
 
     public void GameStart()
-    {
-        Debug.Log("GAME START");
-        
+    {   
         //Action should be done on every single client
         SetCharacterColor();
         SetCharacterPos();

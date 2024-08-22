@@ -47,6 +47,7 @@ public class Pan : NetworkBehaviour, ISpawned
 
     public void Flip()
     {
+        SoundManager.PlayEffect("flip");
         if (!HasStateAuthority)
         {
             if (!isFlipped)

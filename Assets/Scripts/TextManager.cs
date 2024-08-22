@@ -39,7 +39,6 @@ public class TextManager : MonoBehaviour
         {
             if (!gameOver)
             {
-                Debug.Log("GAMEOVER");
                 GameManager.Instance.GameEnd();
                 gameOver = true;
             }
@@ -55,13 +54,13 @@ public class TextManager : MonoBehaviour
         {
             titleImages.GetChild(1).gameObject.SetActive(true);
             panResultText.color = Color.red;
-            panResultText.text = str + "\nRED WIN!";
+            panResultText.text = str + "\nª°∞≠∆¿ Ω¬∏Æ!";
         }
         else
         {
             titleImages.GetChild(0).gameObject.SetActive(true);
             panResultText.color = Color.blue;
-            panResultText.text = str + "\nBLUE WIN!";
+            panResultText.text = str + "\n∆ƒ∂˚∆¿ Ω¬∏Æ!";
         }
     }
 
@@ -71,7 +70,7 @@ public class TextManager : MonoBehaviour
         float timer = time;
         while(timer > 0 && GameManager.Instance.WaitingForStart)
         {
-            alertText.text = $"Game Starts in {Mathf.Ceil(timer)}...";
+            alertText.text = $"{Mathf.Ceil(timer)}√  »ƒ ∞‘¿”¿Ã Ω√¿€µÀ¥œ¥Ÿ...";
             timer -= Time.deltaTime;
             yield return null;
         }
