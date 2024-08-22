@@ -153,6 +153,7 @@ MonoBehaviour:
   speed: 10
   joystick: {fileID: 0}
   actionButton: {fileID: 0}
+  description: Bomb!
   _team: 0
 --- !u!114 &6386561474746410212
 MonoBehaviour:

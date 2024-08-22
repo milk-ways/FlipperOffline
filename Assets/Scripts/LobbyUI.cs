@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LobbyUI : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] Button MultiMatchButton;
     [SerializeField] Button previousButton;
     [SerializeField] Button nextButton;
+    [SerializeField] TextMeshProUGUI name;
+    [SerializeField] TextMeshProUGUI description;
 
     private int current = 0;
     private int previous = 0;
@@ -40,6 +43,7 @@ public class LobbyUI : MonoBehaviour
             players[i] = rootPlayer.GetChild(i);
         }
 
+        SetText();
         players[current].gameObject.SetActive(true);
     }
 
@@ -49,6 +53,8 @@ public class LobbyUI : MonoBehaviour
 
         previous = current;
         current = (current + 1) % rootPlayer.childCount;
+
+        SetText();
 
         players[current].gameObject.SetActive(true);
     }
@@ -60,7 +66,15 @@ public class LobbyUI : MonoBehaviour
         current = previous;
         previous = previous == 0 ? rootPlayer.childCount - 1 : previous - 1;
 
+        SetText();
+
         players[current].gameObject.SetActive(true);
     }
 
+    public void SetText()
+    {
+        name.text = players[current].name;
+
+        description.text = players[current].GetComponent<Character>().description;
+    }
 }

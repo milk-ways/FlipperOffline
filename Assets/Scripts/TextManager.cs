@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Fusion;
+using UnityEngine.UI;
 
 public class TextManager : MonoBehaviour
 {
     public bool isStarted { get; set; } = false;
 
     public TextMeshProUGUI timeText;
-    public TextMeshProUGUI resultText;
+    public TextMeshProUGUI alertText;
+    public GameObject result;
+    public Transform titleImages;
+    public TextMeshProUGUI panResultText;
+
+    public Slider panSlider;
 
     private float time;
 
@@ -19,6 +25,8 @@ public class TextManager : MonoBehaviour
     {
         time = GameManager.Instance.GameTime;
         timeText.gameObject.SetActive(true);
+        panSlider.gameObject.SetActive(true);
+        panSlider.value = GameManager.Instance.panManager.BluePanCount / (GameManager.Instance.panManager.RedPanCount + GameManager.Instance.panManager.BluePanCount);
         gameOver = false;
     }
 
@@ -42,31 +50,33 @@ public class TextManager : MonoBehaviour
 
     public void GameOver(string str, bool redWin)
     {
-        resultText.gameObject.SetActive(true);
+        result.gameObject.SetActive(true);
 
         if (redWin)
         {
-            resultText.color = Color.red;
-            resultText.text = str + "\nRED WIN!";
+            titleImages.GetChild(1).gameObject.SetActive(true);
+            panResultText.color = Color.red;
+            panResultText.text = str + "\nRED WIN!";
         }
         else
         {
-            resultText.color = Color.blue;
-            resultText.text = str + "\nBLUE WIN!";
+            titleImages.GetChild(0).gameObject.SetActive(true);
+            panResultText.color = Color.blue;
+            panResultText.text = str + "\nBLUE WIN!";
         }
     }
 
     public IEnumerator ShowReadyText(int time)
     {
         Debug.Log(GameManager.Instance.WaitingForStart);
-        resultText.gameObject.SetActive(true);
+        alertText.gameObject.SetActive(true);
         float timer = time;
         while(timer > 0 && GameManager.Instance.WaitingForStart)
         {
-            resultText.text = $"Game Starts in {Mathf.Ceil(timer)}...";
+            alertText.text = $"Game Starts in {Mathf.Ceil(timer)}...";
             timer -= Time.deltaTime;
             yield return null;
         }
-        resultText.gameObject.SetActive(false);
+        alertText.gameObject.SetActive(false);
     }
 }

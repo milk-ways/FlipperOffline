@@ -153,6 +153,7 @@ MonoBehaviour:
   speed: 10
   joystick: {fileID: 0}
   actionButton: {fileID: 0}
+  description: Fever!
   _team: 0
 --- !u!114 &7387059957935903675
 MonoBehaviour:

@@ -32,6 +32,7 @@ public class PanManager : MonoBehaviour
             {
                 var temp = NetworkRunnerHandler.Instance.networkRunner.Spawn(pan, new Vector3(blank * j, 0, blank * i));
                 temp.transform.parent = gameObject.transform;
+                temp.GetComponent<Renderer>().material.color = (i + j) % 2 == 0 ? Color.red : Color.blue;
                 panGroup.Add(temp.GetComponent<Pan>());
             }
         }

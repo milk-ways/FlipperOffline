@@ -18,6 +18,8 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
     private float cooltime;
     protected float maxCooltime = 5f;
 
+    public string description = "";
+
     [Networked]
     public Team team { get; set; } = 0;
 
@@ -60,6 +62,8 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
         {
             actionButton.onClick.AddListener(Ability);
         }
+
+        //actionButton.transform.GetChild(0).GetChild(/*넘어온 캐릭터 값*/).gameObject.SetActive(true);
         Camera.main.GetComponent<CameraController>().Target = gameObject;
         Camera.main.GetComponent<CameraController>().SetCameraBoundary();
     }
