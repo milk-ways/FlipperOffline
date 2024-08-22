@@ -82,6 +82,11 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
 
         transform.Translate(moveVec);
 
+        if (!(x == 0 && z == 0))
+        {
+            transform.GetChild(0).rotation = Quaternion.LookRotation(new Vector3(x, 0, z));
+        }
+
         if (moveVec.sqrMagnitude == 0)
             return;
     }
