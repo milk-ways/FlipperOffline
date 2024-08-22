@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pan : NetworkBehaviour
+public class Pan : NetworkBehaviour, ISpawned
 {
     [Networked, OnChangedRender(nameof(InternalFlip))]
     public bool isFlipped { get; set; } = false;
@@ -35,6 +35,7 @@ public class Pan : NetworkBehaviour
         if (isStatic)
             return;
 
+        Debug.Log(isFlipped);
         if (isFlipped)
         {
             panColor.material.color = flippedColor;
@@ -61,25 +62,18 @@ public class Pan : NetworkBehaviour
         }
 
         isFlipped = !isFlipped;
+        GameManager.Instance.panManager.AddPanCount(isFlipped);
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RpcFlip()
     {
-        if (!HasStateAuthority)
-        {
-            if (!isFlipped)
-            {
-                panColor.material.color = flippedColor;
-            }
-            else
-            {
-                panColor.material.color = nonFlippedColor;
-            }
-            return;
-        }
+        Flip();
+    }
 
-        isFlipped = !isFlipped;
+    public override void Spawned()
+    {
+        InternalFlip();
     }
 
 }

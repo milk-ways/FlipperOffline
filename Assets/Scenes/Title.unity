@@ -947,6 +947,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7431358238908515806, guid: 5780f43a75e2ccc4fab170ddd7975a52, type: 3}
+      propertyPath: PanManagerPrefab
+      value: 
+      objectReference: {fileID: 6144123661887578952, guid: ab9147b5e3a57de44bd18d88d81a9b0b, type: 3}
+    - target: {fileID: 7431358238908515806, guid: 5780f43a75e2ccc4fab170ddd7975a52, type: 3}
       propertyPath: PlayerPrefab.Array.data[0]
       value: 
       objectReference: {fileID: 2960473355235908814, guid: f6b19e905b044664f936349961be4cee, type: 3}
@@ -2099,7 +2103,7 @@ MonoBehaviour:
   MultiMatchButton: {fileID: 1942711388}
   previousButton: {fileID: 284521676}
   nextButton: {fileID: 1679343820}
-  name: {fileID: 2056927750}
+  characterName: {fileID: 2056927750}
   description: {fileID: 1065241249}
   rootPlayer: {fileID: 2073655960}
   players:

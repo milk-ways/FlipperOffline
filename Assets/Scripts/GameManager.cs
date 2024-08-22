@@ -63,14 +63,20 @@ public class GameManager : NetworkBehaviour, ISpawned
         SetCharacterColor();
         SetCharacterPos();
         Camera.main.GetComponent<CameraController>().SetCameraBoundary();
-        textManager.TimerStart();
-
+        
         //Action should be done only on MasterClient
         if (NetworkRunnerHandler.Instance.networkRunner.IsSharedModeMasterClient)
         {
             NetworkRunnerHandler.Instance.networkRunner.SessionInfo.IsOpen = false;
             panManager.GeneratePans();
+            RpcGameStart();
         }   
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RpcGameStart()
+    {
+        textManager.TimerStart();
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]

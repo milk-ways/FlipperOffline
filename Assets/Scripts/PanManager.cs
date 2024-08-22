@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 
-public class PanManager : MonoBehaviour
-{
+public class PanManager : NetworkBehaviour
+{ 
     private List<Pan> panGroup = new List<Pan>();
 
     [SerializeField]
@@ -12,8 +12,10 @@ public class PanManager : MonoBehaviour
     [SerializeField]
     private GameObject plane;
 
-    private int redPanCount;
-    private int bluePanCount;
+    [Networked, OnChangedRender(nameof(RpcOnChangeCount))]
+    public int redPanCount { get; set; } = 0;
+    [Networked]
+    public int bluePanCount { get; set; } = 0;
 
     public float blank = 1.5f;
 
@@ -32,13 +34,22 @@ public class PanManager : MonoBehaviour
             {
                 var temp = NetworkRunnerHandler.Instance.networkRunner.Spawn(pan, new Vector3(blank * j, 0, blank * i));
                 temp.transform.parent = gameObject.transform;
-                temp.GetComponent<Renderer>().material.color = (i + j) % 2 == 0 ? Color.red : Color.blue;
+                temp.GetComponent<Pan>().isFlipped = (i + j) % 2 == 0;
+                if ((i + j) % 2 == 0)
+                { 
+                    redPanCount++; 
+                }
+                else
+                {
+                    bluePanCount++;
+                }
                 panGroup.Add(temp.GetComponent<Pan>());
             }
         }
 
-        plane.transform.localScale = new Vector3(blank * 0.1f * col, 1f, blank * 0.1f * row);
-        plane.transform.position = new Vector3(blank * (col / 2), 0f, blank * (row / 2));
+        RpcOnChangeCount();
+        //plane.transform.localScale = new Vector3(blank * 0.1f * col, 1f, blank * 0.1f * row);
+        //plane.transform.position = new Vector3(blank * (col / 2), 0f, blank * (row / 2));
     }
 
     public void CountPanColor()
@@ -59,8 +70,34 @@ public class PanManager : MonoBehaviour
         }
     }
 
+    public void AddPanCount(bool isRed, bool isInitial = false)
+    {
+        if (isRed)
+        {
+            redPanCount++;
+            if (!isInitial)
+            {
+                bluePanCount--;
+            }
+        }
+        else
+        {
+            bluePanCount++;
+            if(!isInitial)
+            {
+                redPanCount--;
+            }
+        }
+    }
+
     public void FlipPan(int index)
     {
         panGroup[index].Flip();
+    }
+
+    [Rpc]
+    public void RpcOnChangeCount()
+    {
+        GameManager.Instance.textManager.SetPanRate((float)BluePanCount / (RedPanCount + BluePanCount));
     }
 }

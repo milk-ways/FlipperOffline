@@ -18,6 +18,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     public int SelectedPlayer = 0;
 
     public GameObject GameManagerPrefab;
+    public GameObject PanManagerPrefab;
 
     public NetworkObject LocalCharacter;
 
@@ -88,6 +89,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         if (runner.SessionInfo.PlayerCount == 1 && runner.IsSharedModeMasterClient)
         {
             runner.SessionInfo.IsOpen = false;
+            runner.Spawn(PanManagerPrefab);
             runner.Spawn(GameManagerPrefab);
         }
 

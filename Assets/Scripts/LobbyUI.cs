@@ -10,7 +10,7 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] Button MultiMatchButton;
     [SerializeField] Button previousButton;
     [SerializeField] Button nextButton;
-    [SerializeField] TextMeshProUGUI name;
+    [SerializeField] TextMeshProUGUI characterName;
     [SerializeField] TextMeshProUGUI description;
 
     private int current = 0;
@@ -73,7 +73,7 @@ public class LobbyUI : MonoBehaviour
 
     public void SetText()
     {
-        name.text = players[current].name;
+        characterName.text = players[current].name;
 
         description.text = players[current].GetComponent<Character>().description;
     }
