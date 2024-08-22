@@ -8,12 +8,14 @@ public class BombCharacter : Character
 {
     protected override void CharacterAction()
     {
+        RpcSyncAction();
         Bomb();
     }
 
-    protected override void RpcSyncAction()
+    [Rpc]
+    protected void RpcSyncAction()
     {
-        
+        abilityEffect.Play();
     }
 
     private void Bomb()

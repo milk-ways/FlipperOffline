@@ -16,6 +16,7 @@ public class AttackCharacter : Character
 
     protected override void CharacterAction()
     {
+        RpcSyncAction();
         Collider[] colls = Physics.OverlapSphere(transform.position, NormalizedAttackRange * AttackRange);
 
         foreach (var coll in colls)
@@ -31,7 +32,7 @@ public class AttackCharacter : Character
     }
 
     [Rpc]
-    protected override void RpcSyncAction()
+    protected void RpcSyncAction()
     {
         abilityEffect.Play();
     }

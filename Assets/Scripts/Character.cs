@@ -105,13 +105,9 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
     protected abstract void CharacterAction();
     protected virtual void Ability()
     {
-        RpcSyncAction();
         CharacterAction();
         StartCoroutine(CoolTime());
     }
-
-    [Rpc]
-    protected abstract void RpcSyncAction();
 
     public IEnumerator CoolTime()
     {

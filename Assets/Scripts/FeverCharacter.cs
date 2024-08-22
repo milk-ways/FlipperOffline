@@ -13,6 +13,7 @@ public class FeverCharacter : Character
 
     protected override void CharacterAction()
     {
+        RpcSyncAction();
         StartCoroutine(AcitvateTime(5f));
     }
 
@@ -40,16 +41,19 @@ public class FeverCharacter : Character
     public IEnumerator AcitvateTime(float maxTime)
     {
         isActivated = true;
+        abilityEffect.Play();
         float activateTime = 0f;
         while (activateTime < maxTime)
         {
             activateTime += Time.deltaTime;
             yield return null;
         }
+        abilityEffect.Stop();
         isActivated = false;
     }
 
-    protected override void RpcSyncAction()
+    [Rpc]
+    protected void RpcSyncAction()
     {
         
     }
