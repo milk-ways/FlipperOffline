@@ -63,7 +63,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
             actionButton.onClick.AddListener(Ability);
         }
 
-        //actionButton.transform.GetChild(0).GetChild(/*넘어온 캐릭터 값*/).gameObject.SetActive(true);
+        actionButton.transform.GetChild(0).GetChild(NetworkRunnerHandler.Instance.SelectedPlayer).gameObject.SetActive(true);
         Camera.main.GetComponent<CameraController>().Target = gameObject;
         Camera.main.GetComponent<CameraController>().SetCameraBoundary();
     }
