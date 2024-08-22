@@ -17,25 +17,15 @@ public class FeverCharacter : Character
         StartCoroutine(AcitvateTime(5f));
     }
 
-    protected override void Move()
+    protected override void Move(Vector3 dir)
     {
         if (!isGround)
             return;
 
-        float x = team == 0 ? joystick.Horizontal : -joystick.Horizontal;
-        float z = team == 0 ? joystick.Vertical : -joystick.Vertical;
-
-        Vector3 moveVec = new Vector3(x, 0, z) * speed * (isActivated ? ActivatedSpeedRate : 1f) * Time.deltaTime;
-
+        Vector3 moveVec = dir * (team == Team.blue ? 1 : -1) * speed * (isActivated ? ActivatedSpeedRate : 1f) * Runner.DeltaTime;
         transform.Translate(moveVec);
 
-        if (!(x == 0 && z == 0))
-        {
-            transform.GetChild(0).rotation = Quaternion.LookRotation(new Vector3(x, 0, z));
-        }
-
-        if (moveVec.sqrMagnitude == 0)
-            return;
+        transform.GetChild(0).rotation = Quaternion.LookRotation(dir * (team == Team.blue ? 1 : -1));
     }
 
     public IEnumerator AcitvateTime(float maxTime)

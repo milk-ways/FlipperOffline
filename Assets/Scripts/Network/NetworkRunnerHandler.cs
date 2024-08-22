@@ -20,8 +20,6 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     public GameObject GameManagerPrefab;
     public GameObject PanManagerPrefab;
 
-    public NetworkObject LocalCharacter;
-
     private void Awake()
     {
         if (Instance == null)
@@ -95,7 +93,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
         if (player == runner.LocalPlayer)
         {
-            var localCharacter = runner.Spawn(PlayerPrefab[SelectedPlayer], new Vector3(5f, 0.75f, 5f), Quaternion.identity);
+            var localCharacter = runner.Spawn(PlayerPrefab[SelectedPlayer], new Vector3(5f, 0.75f, 5f), Quaternion.identity, player);
             Debug.Log($"Spawn Character : {runner.LocalPlayer}");
             runner.SetPlayerObject(player, localCharacter);
         }
@@ -132,7 +130,20 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
+        if (SceneManager.GetActiveScene().buildIndex != 1) return;
 
+        var data = new CharacterInputData();
+
+        var joy = InputManager.Instance.joystick;
+
+        var charObj = runner.GetPlayerObject(runner.LocalPlayer);
+        if(charObj != null)
+        {
+            data.ability = charObj.GetComponent<Character>().isAbilityPressed;
+        }
+        data.direction += new Vector3(joy.Horizontal, 0, joy.Vertical);
+
+        input.Set(data);
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)

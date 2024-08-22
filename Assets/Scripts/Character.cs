@@ -28,6 +28,8 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
 
     public ParticleSystem abilityEffect;
 
+     public bool isAbilityPressed { get; private set; } = false;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -44,8 +46,17 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
             Revive();
         }
 
-        if(joystick != null)
-            Move();
+        if(GetInput(out CharacterInputData data))
+        {
+            Move(data.direction);
+
+            Debug.Log(data.ability);
+            if(data.ability)
+            {
+                Ability();
+            }
+        }
+        isAbilityPressed = false;
     }
 
     private void Revive()
@@ -65,35 +76,25 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
     {
         joystick = InputManager.Instance.joystick;
         actionButton = InputManager.Instance.Button;
-        if (actionButton != null)
+        actionButton.onClick.AddListener(() =>
         {
-            actionButton.onClick.AddListener(Ability);
-        }
+            isAbilityPressed = true;
+        });
 
         actionButton.transform.GetChild(0).GetChild(NetworkRunnerHandler.Instance.SelectedPlayer).gameObject.SetActive(true);
         Camera.main.GetComponent<CameraController>().Target = gameObject;
         Camera.main.GetComponent<CameraController>().SetCameraBoundary();
     }
 
-    protected virtual void Move()
+    protected virtual void Move(Vector3 dir)
     {
         if (!isGround)
             return;
 
-        float x = team == 0 ? joystick.Horizontal : -joystick.Horizontal;
-        float z = team == 0 ? joystick.Vertical : -joystick.Vertical;
-
-        Vector3 moveVec = new Vector3(x, 0, z) * speed * Time.deltaTime;
-
+        Vector3 moveVec = dir * (team == Team.blue ? 1 : -1) * speed * Runner.DeltaTime;
         transform.Translate(moveVec);
-
-        if (!(x == 0 && z == 0))
-        {
-            transform.GetChild(0).rotation = Quaternion.LookRotation(new Vector3(x, 0, z));
-        }
-
-        if (moveVec.sqrMagnitude == 0)
-            return;
+        
+        transform.GetChild(0).rotation = Quaternion.LookRotation(dir * (team == Team.blue ? 1 : -1));
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -165,3 +166,9 @@ public enum Team
     blue = 0,
     red = 1
 };
+
+public struct CharacterInputData : INetworkInput
+{
+    public Vector3 direction;
+    public bool ability;
+}
