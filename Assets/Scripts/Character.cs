@@ -8,7 +8,7 @@ using Fusion;
 public abstract class Character : NetworkBehaviour, IPlayerJoined
 {
     [SerializeField]
-    private float speed;
+    protected readonly float speed = 10f;
     
     public VariableJoystick joystick;   
     public Button actionButton;
@@ -24,13 +24,18 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
     [Networked]
     public Team team { get; set; } = 0;
 
-    private bool isGround = false;
+    protected bool isGround = false;
+
+    public ParticleSystem abilityEffect;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         animator = transform.GetChild(0).GetComponent<Animator>();
+
+        AwakeOnChild();
     }
+    protected virtual void AwakeOnChild() { }
 
     public override void FixedUpdateNetwork()
     {
@@ -70,7 +75,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
         Camera.main.GetComponent<CameraController>().SetCameraBoundary();
     }
 
-    private void Move()
+    protected virtual void Move()
     {
         if (!isGround)
             return;
@@ -100,9 +105,13 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
     protected abstract void CharacterAction();
     protected virtual void Ability()
     {
+        RpcSyncAction();
         CharacterAction();
         StartCoroutine(CoolTime());
     }
+
+    [Rpc]
+    protected abstract void RpcSyncAction();
 
     public IEnumerator CoolTime()
     {
@@ -126,9 +135,17 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
 
         if (pan != null)
         {
-            pan.Flip();
+            if ((pan.isFlipped && team == Team.red) || (!pan.isFlipped && team == Team.blue))
+            {
+                return;
+            }
+            else
+            {
+                pan.Flip();
+            }
         }
     }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))

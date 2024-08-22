@@ -5,21 +5,34 @@ using UnityEngine;
 
 public class AttackCharacter : Character
 {
-    private float attackPower = 10f;
+    private readonly float NormalizedAttackRange = 3f;
+
+    [SerializeField] private float AttackRange = 1f;
+    [SerializeField] private float attackPower = 10f;
+    protected override void AwakeOnChild()
+    {
+        abilityEffect.transform.localScale = new Vector3(AttackRange, 1, AttackRange);
+    }
 
     protected override void CharacterAction()
     {
-        Collider[] colls = Physics.OverlapSphere(transform.position, 3f);
+        Collider[] colls = Physics.OverlapSphere(transform.position, NormalizedAttackRange * AttackRange);
 
         foreach (var coll in colls)
         {
             if (!coll.gameObject.CompareTag("Player"))
                 continue;
 
-            Vector3 dir = (coll.gameObject.transform.position - transform.position).normalized * attackPower; // 값은 characater 마다 다르게
+            Vector3 dir = (coll.gameObject.transform.position - transform.position).normalized * attackPower;   
 
             Debug.Log(coll.gameObject.name);
             coll.GetComponent<Character>().RpcAddForce(dir);
         }
+    }
+
+    [Rpc]
+    protected override void RpcSyncAction()
+    {
+        abilityEffect.Play();
     }
 }

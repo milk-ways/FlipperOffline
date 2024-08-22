@@ -1,4 +1,5 @@
 using Fusion;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,11 @@ public class BombCharacter : Character
         Bomb();
     }
 
+    protected override void RpcSyncAction()
+    {
+        
+    }
+
     private void Bomb()
     {
         Collider[] colls = Physics.OverlapSphere(transform.position, 3f);
@@ -18,8 +24,19 @@ public class BombCharacter : Character
         {
             if (!coll.gameObject.CompareTag("Pan"))
                 continue;
+            var pan = coll.gameObject.GetComponent<Pan>();
 
-            coll.GetComponent<Pan>().RpcFlip();
+            if (pan != null)
+            {
+                if ((pan.isFlipped && team == Team.red) || (!pan.isFlipped && team == Team.blue))
+                {
+                    continue;
+                }
+                else
+                {
+                    pan.RpcFlip();
+                }
+            }
         }
     }
 }
