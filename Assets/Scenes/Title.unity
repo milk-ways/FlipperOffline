@@ -466,7 +466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &246914510
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2550,7 +2550,9 @@ MonoBehaviour:
   nextButton: {fileID: 1679343820}
   characterName: {fileID: 2056927750}
   description: {fileID: 1065241249}
-  MatchmakingWaitingPanel: {fileID: 0}
+  MatchmakingWaitingPanel: {fileID: 246914510}
+  waitingText: {fileID: 148300388}
+  characterDesc: {fileID: 11400000, guid: 952d8c6a4cdb3ef4dba21a50e2510eb8, type: 2}
   rootPlayer: {fileID: 2073655960}
   players:
   - {fileID: 1504678001}

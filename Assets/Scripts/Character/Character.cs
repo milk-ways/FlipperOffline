@@ -19,8 +19,6 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
     private float cooltime;
     protected float maxCooltime = 5f;
 
-    public string description = "";
-
     [Networked]
     public Team team { get; set; } = 0;
 

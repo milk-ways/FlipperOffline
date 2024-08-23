@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Text;
+using System;
 
 public class LobbyUI : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] RectTransform MatchmakingWaitingPanel;
     [SerializeField] TextMeshProUGUI waitingText;
 
+    [SerializeField] CharacterDesc characterDesc;
+
     private int current = 0;
     private int previous = 0;
 
@@ -27,18 +30,12 @@ public class LobbyUI : MonoBehaviour
     {
         SingleMatchButton.onClick.AddListener(() =>
         {
-            StartCoroutine(WatingTextRoutine());
-            MatchmakingWaitingPanel.gameObject.SetActive(true);
-            NetworkRunnerHandler.Instance.SelectedPlayer = current;
-            NetworkRunnerHandler.Instance.FindOneVsOneMatch();
+            MatchButton(NetworkRunnerHandler.Instance.FindOneVsOneMatch);
         });
 
         MultiMatchButton.onClick.AddListener(() =>
         {
-            StartCoroutine(WatingTextRoutine());
-            MatchmakingWaitingPanel.gameObject.SetActive(true);
-            NetworkRunnerHandler.Instance.SelectedPlayer = current;
-            NetworkRunnerHandler.Instance.FindThreeVsThreeMatch();
+            MatchButton(NetworkRunnerHandler.Instance.FindThreeVsThreeMatch);
         });
 
         previousButton.onClick.AddListener(PreviousPlayer);
@@ -53,6 +50,14 @@ public class LobbyUI : MonoBehaviour
 
         SetText();
         players[current].gameObject.SetActive(true);
+    }
+
+    public void MatchButton(Action action)
+    {
+        StartCoroutine(WatingTextRoutine());
+        MatchmakingWaitingPanel.gameObject.SetActive(true);
+        NetworkRunnerHandler.Instance.SelectedPlayer = current;
+        action?.Invoke();
     }
 
     public void NextPlayer()
@@ -81,9 +86,8 @@ public class LobbyUI : MonoBehaviour
 
     public void SetText()
     {
-        characterName.text = players[current].name;
-
-        description.text = players[current].GetComponent<Character>().description;
+        characterName.text = characterDesc.characterName[current];
+        description.text = characterDesc.characterDesc[current];
     }
 
     private float duration = 0.2f;
@@ -91,12 +95,11 @@ public class LobbyUI : MonoBehaviour
     private IEnumerator WatingTextRoutine()
     {
         StringBuilder builder = new();
-        builder.Append("技记 立加 吝....");
-
+        string tot = "技记 立加 吝....";
         int baseLen = "技记 立加 吝".Length;
         while(true)
         {
-            waitingText.text = builder.ToString(0, baseLen + len);
+            waitingText.text = tot.Substring(0, baseLen + len);
             yield return new WaitForSeconds(duration);
             len = (len + 1) % 4;
         }
