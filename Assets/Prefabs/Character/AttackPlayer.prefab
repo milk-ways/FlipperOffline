@@ -1143,7 +1143,7 @@ MonoBehaviour:
   _team: 0
   abilityEffect: {fileID: 5184012557407326748}
   AttackRange: 1.5
-  attackPower: 14
+  attackPower: 15
 --- !u!114 &4370436611353310642
 MonoBehaviour:
   m_ObjectHideFlags: 0

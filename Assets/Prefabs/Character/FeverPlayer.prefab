@@ -908,7 +908,7 @@ MonoBehaviour:
   _team: 0
   abilityEffect: {fileID: 3597681805718812533}
   ActivatedSpeedRate: 2.5
-  duration: 4
+  duration: 3.5
 --- !u!114 &7387059957935903675
 MonoBehaviour:
   m_ObjectHideFlags: 0
