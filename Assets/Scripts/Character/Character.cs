@@ -39,7 +39,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
 
     public override void FixedUpdateNetwork()
     {
-        if (transform.position.y <= -1f)
+        if (transform.position.y <= -2.5f)
         {
             Revive();
         }
@@ -67,6 +67,33 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
         
         transform.position = new Vector3(clampX, 4f, clampZ);
         rigid.velocity = Vector3.zero;
+
+        rigid.useGravity = false;
+
+        StartCoroutine(Blink(0, true));
+    }
+
+    private IEnumerator Blink(int count, bool makeBlink)
+    {
+        if (makeBlink)
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
+        else
+        {
+            transform.GetChild(0).gameObject.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(0.2f);
+
+        if (count < 7)
+        {
+            StartCoroutine(Blink(count + 1, !makeBlink));
+        }
+        else
+        {
+            rigid.useGravity = true;
+        }
     }
 
     public void AssignUI()
