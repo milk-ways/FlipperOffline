@@ -143,6 +143,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             data.ability = charObj.GetComponent<Character>().isAbilityPressed;
         }
         data.direction += new Vector3(joy.Horizontal, 0, joy.Vertical);
+        data.ability |= Input.GetKey(KeyCode.Space);
 
         input.Set(data);
     }

@@ -201,6 +201,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
 
     public void SetTeamColor()
     {
+        TeamIndicator.gameObject.SetActive(true);
         if(team == Team.red)
         {
             TeamIndicator.material = RedMaterial;
