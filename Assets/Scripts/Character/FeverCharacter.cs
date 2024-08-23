@@ -10,11 +10,13 @@ public class FeverCharacter : Character
 
     [SerializeField]
     private float ActivatedSpeedRate = 2f;
+    [SerializeField]
+    private float duration = 4f;
 
     protected override void CharacterAction()
     {
         RpcSyncAction();
-        StartCoroutine(AcitvateTime(5f));
+        StartCoroutine(AcitvateTime(duration));
     }
 
     protected override void Move(Vector3 dir)

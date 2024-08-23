@@ -1208,7 +1208,7 @@ MonoBehaviour:
   maxCooltime: 5
   _team: 0
   abilityEffect: {fileID: 8543259966323160185}
-  BombRange: 4.5
+  BombRange: 3.75
 --- !u!114 &6386561474746410212
 MonoBehaviour:
   m_ObjectHideFlags: 0
