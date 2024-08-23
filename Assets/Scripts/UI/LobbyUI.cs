@@ -20,6 +20,9 @@ public class LobbyUI : MonoBehaviour
 
     [SerializeField] CharacterDesc characterDesc;
 
+    [SerializeField] Button QuitButton;
+    [SerializeField] Button SoundManageButton;
+
     private int current = 0;
     private int previous = 0;
 
@@ -36,6 +39,16 @@ public class LobbyUI : MonoBehaviour
         MultiMatchButton.onClick.AddListener(() =>
         {
             MatchButton(NetworkRunnerHandler.Instance.FindThreeVsThreeMatch);
+        });
+
+        QuitButton.onClick.AddListener(() =>
+        {
+            Application.Quit();
+        });
+
+        SoundManageButton.onClick.AddListener(() =>
+        {
+
         });
 
         previousButton.onClick.AddListener(PreviousPlayer);
