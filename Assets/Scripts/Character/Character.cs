@@ -8,7 +8,7 @@ using Fusion;
 public abstract class Character : NetworkBehaviour, IPlayerJoined
 {
     [SerializeField]
-    protected readonly float speed = 7.5f;
+    protected float speed = 7.5f;
 
     [SerializeField] private SkinnedMeshRenderer TeamIndicator;
     [SerializeField] private Material RedMaterial;

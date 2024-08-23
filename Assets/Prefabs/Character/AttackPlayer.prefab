@@ -1133,6 +1133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b5246109dbfb742a2fcf832c41bcbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 8
   TeamIndicator: {fileID: 1576881933682109930}
   RedMaterial: {fileID: 2100000, guid: c15c315488711804d80c2b2bab50154c, type: 2}
   BlueMaterial: {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
@@ -1141,8 +1142,8 @@ MonoBehaviour:
   maxCooltime: 5
   _team: 0
   abilityEffect: {fileID: 5184012557407326748}
-  AttackRange: 2
-  attackPower: 17.5
+  AttackRange: 2.25
+  attackPower: 19
 --- !u!114 &4370436611353310642
 MonoBehaviour:
   m_ObjectHideFlags: 0
