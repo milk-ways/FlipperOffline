@@ -61,6 +61,11 @@ public class SoundManager : DontDestroySingleton<SoundManager>
         m_AudioListener = m_Camera.GetComponent<AudioListener>();
         SceneManager.activeSceneChanged += (a, b) =>
         {
+            if(b.name == "Title")
+            {
+                PlayBGM("titleBGM");
+            }
+
             for(int i = effectSource.Count - 1; i >= 0; i--)
             {
                 if (effectSource[i] == null)

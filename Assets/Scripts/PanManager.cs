@@ -41,7 +41,7 @@ public class PanManager : NetworkBehaviour, ISpawned
             {
                 float randomOffset = Random.Range(0f, 1f);
 
-                var temp = NetworkRunnerHandler.Instance.networkRunner.Spawn(pan, new Vector3(blank * j + Random.Range(-0.5f, 0.5f), 0, blank * i + Random.Range(-0.5f, 0.5f)));
+                var temp = NetworkRunnerHandler.Instance.networkRunner.Spawn(pan, new Vector3(blank * j + Random.Range(-0.5f, 0.5f), 0.15f, blank * i + Random.Range(-0.5f, 0.5f)));
                 temp.GetComponent<Pan>().isFlipped = (randomOffset <= .5f);
                 if (randomOffset <= .5f)
                 { 

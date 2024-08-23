@@ -19,6 +19,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9decba576a368ec46a90938c57da5d5a, type: 3}
   - {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
   - {fileID: 8300000, guid: 4417b95c0f36c964a861cdb118f4166b, type: 3}
+  - {fileID: 8300000, guid: 245965889d0a183438ef3478b27122c0, type: 3}
+  - {fileID: 8300000, guid: b37e3e3d90fec9f4b85953cc52e3b6eb, type: 3}
   audioClipKey:
   - attack
   - bomb
@@ -26,3 +28,5 @@ MonoBehaviour:
   - result
   - flip
   - ingame
+  - buttonClick
+  - titleBGM
