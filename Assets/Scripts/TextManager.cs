@@ -21,6 +21,9 @@ public class TextManager : MonoBehaviour
 
     public Slider panSlider;
 
+    public RectTransform codeIndicator;
+    public TextMeshProUGUI codeText;
+
     private float time;
 
     private bool gameOver = true;
@@ -28,7 +31,7 @@ public class TextManager : MonoBehaviour
 
     public void TimerStart()
     {
-        
+        codeIndicator.gameObject.SetActive(false);
         time = GameManager.Instance.GameTime;
         timerRect.gameObject.SetActive(true);
         panSlider.gameObject.SetActive(true);
@@ -54,6 +57,7 @@ public class TextManager : MonoBehaviour
 
     private void Start()
     {
+        codeText.text = SoundManager.Instance.LobbyName;
         StartCoroutine(RateOscilate());
     }
 

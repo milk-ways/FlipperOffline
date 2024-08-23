@@ -21,6 +21,7 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] CharacterDesc characterDesc;
 
     [SerializeField] Button QuitButton;
+    [SerializeField] TMP_InputField CustomLobbyCode;
 
     private int current = 0;
     private int previous = 0;
@@ -32,12 +33,28 @@ public class LobbyUI : MonoBehaviour
     {
         SingleMatchButton.onClick.AddListener(() =>
         {
-            MatchButton(NetworkRunnerHandler.Instance.FindOneVsOneMatch);
+            MatchButton();
+            if(CustomLobbyCode.text.Length > 0)
+            {
+                NetworkRunnerHandler.Instance.FindOneVsOneMatch(GetLobbyName());
+            }
+            else
+            {
+                NetworkRunnerHandler.Instance.FindOneVsOneMatch();
+            }
         });
 
         MultiMatchButton.onClick.AddListener(() =>
         {
-            MatchButton(NetworkRunnerHandler.Instance.FindTwoVsTwoMatch);
+            MatchButton();
+            if (CustomLobbyCode.text.Length > 0)
+            {
+                NetworkRunnerHandler.Instance.FindTwoVsTwoMatch(GetLobbyName());
+            }
+            else
+            {
+                NetworkRunnerHandler.Instance.FindTwoVsTwoMatch();
+            }
         });
 
         QuitButton.onClick.AddListener(() =>
@@ -59,12 +76,24 @@ public class LobbyUI : MonoBehaviour
         players[current].gameObject.SetActive(true);
     }
 
-    public void MatchButton(Action action)
+    public void MatchButton()
     {
+        SoundManager.Instance.LobbyName = GetLobbyName();
         StartCoroutine(WatingTextRoutine());
         MatchmakingWaitingPanel.gameObject.SetActive(true);
         NetworkRunnerHandler.Instance.SelectedPlayer = current;
-        action?.Invoke();
+    }
+
+    public string GetLobbyName()
+    {
+        if(CustomLobbyCode.text.Length > 6)
+        {
+            return CustomLobbyCode.text.Substring(0, 6);
+        }
+        else
+        {
+            return CustomLobbyCode.text;
+        }
     }
 
     public void NextPlayer()

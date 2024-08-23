@@ -10,7 +10,7 @@ public class SoundManager : DontDestroySingleton<SoundManager>
     [SerializeField] AudioSource bgmSource;
     List<AudioSource> effectSource = new();
 
-
+    public string LobbyName = "";
     private float masterVolume = 1.0f;
     public float MasterVolume
     {

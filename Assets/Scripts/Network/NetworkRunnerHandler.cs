@@ -44,7 +44,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    public void FindOneVsOneMatch()
+    public void FindOneVsOneMatch(string customLobby = "1vs1")
     {
         networkRunner.ProvideInput = true;
         networkRunner.StartGame(new StartGameArgs()
@@ -52,13 +52,13 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             GameMode = GameMode.Shared,
             Address = NetAddress.Any(),
             Scene = SceneRef.FromIndex(1),
-            CustomLobbyName = "1vs1",
+            CustomLobbyName = customLobby,
             PlayerCount = 2,
             SceneManager = sceneManager,
         });
     }
 
-    public void FindTwoVsTwoMatch()
+    public void FindTwoVsTwoMatch(string customLobby = "2vs2")
     {
         networkRunner.ProvideInput = true;
         networkRunner.StartGame(new StartGameArgs()
@@ -66,7 +66,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             GameMode = GameMode.Shared,
             Address = NetAddress.Any(),
             Scene = SceneRef.FromIndex(1),
-            CustomLobbyName = "2vs2",
+            CustomLobbyName = customLobby,
             PlayerCount = 4,
             SceneManager = sceneManager,
         });
