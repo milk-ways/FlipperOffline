@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : DontDestroySingleton<SoundManager>
 {
@@ -58,6 +59,16 @@ public class SoundManager : DontDestroySingleton<SoundManager>
         base.Awake();
         m_Camera = Camera.main;
         m_AudioListener = m_Camera.GetComponent<AudioListener>();
+        SceneManager.activeSceneChanged += (a, b) =>
+        {
+            for(int i = effectSource.Count - 1; i >= 0; i--)
+            {
+                if (effectSource[i] == null)
+                {
+                    effectSource.RemoveAt(i);
+                }
+            }
+        };
     }
 
     public static void PlayEffect(string key)

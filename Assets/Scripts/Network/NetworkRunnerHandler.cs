@@ -161,6 +161,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         {
             data.direction += Vector3.right;
         }
+        data.direction.Normalize();
 
         input.Set(data);
     }
