@@ -120,11 +120,11 @@ public class GameManager : NetworkBehaviour, ISpawned
         if (localCharacter == null) return;
         if (localCharacter.GetComponent<Character>().team == 0)
         {
-            localCharacter.transform.position = new Vector3((panManager.blank * (col / 2)), 4.5f, 0f);
+            localCharacter.transform.position = new Vector3(panManager.blank * UnityEngine.Random.Range(0, col - 1), 4.5f, panManager.blank * UnityEngine.Random.Range(0, row - 1));
         }
         else
         {
-            localCharacter.transform.position = new Vector3((panManager.blank * (col / 2)), 4.5f, panManager.blank * (row - 1));
+            localCharacter.transform.position = new Vector3(panManager.blank * UnityEngine.Random.Range(0, col - 1), 4.5f, panManager.blank * UnityEngine.Random.Range(0, row - 1));
         }
     }
 
