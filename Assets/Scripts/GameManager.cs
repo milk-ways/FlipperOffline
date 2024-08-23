@@ -135,14 +135,7 @@ public class GameManager : NetworkBehaviour, ISpawned
             Debug.Log(item);
             var curCharacter = Runner.GetPlayerObject(item);
             if (curCharacter == null) return;
-            if (curCharacter.GetComponent<Character>().team == 0)
-            {
-                curCharacter.GetComponent<MeshRenderer>().material.color = Color.blue;
-            }
-            else
-            {
-                curCharacter.GetComponent<MeshRenderer>().material.color = Color.red;
-            }
+            curCharacter.GetComponent<Character>()?.SetTeamColor();
         }
     }
 }

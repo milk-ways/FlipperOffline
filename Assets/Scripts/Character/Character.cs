@@ -9,7 +9,11 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
 {
     [SerializeField]
     protected readonly float speed = 10f;
-    
+
+    [SerializeField] private SkinnedMeshRenderer TeamIndicator;
+    [SerializeField] private Material RedMaterial;
+    [SerializeField] private Material BlueMaterial;
+
     public VariableJoystick joystick;   
     public Button actionButton;
 
@@ -123,7 +127,6 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
 
         transform.Translate(moveVec);
         RpcSyncRot(moveVec);
-        //transform.GetChild(0).rotation = Quaternion.LookRotation(dir * (team == Team.blue ? 1 : -1));
     }
 
     [Rpc]
@@ -193,6 +196,18 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
         {
             team = (Team)(player.PlayerId % 2);
             AssignUI();
+        }
+    }
+
+    public void SetTeamColor()
+    {
+        if(team == Team.red)
+        {
+            TeamIndicator.material = RedMaterial;
+        }
+        else
+        {
+            TeamIndicator.material = BlueMaterial;
         }
     }
 }
