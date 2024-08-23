@@ -7,8 +7,8 @@ public class CameraController : MonoBehaviour
     public GameObject Target;
 
     private float offsetX = 0.0f;
-    private float offsetY = 4.0f;
-    private float offsetZ = -6.0f;
+    private float offsetY = 6.0f;
+    private float offsetZ = -8.0f;
 
     [SerializeField]
     private float cameraSpeed = 10.0f;
@@ -24,12 +24,12 @@ public class CameraController : MonoBehaviour
         if (Target.GetComponent<Character>().team == 0)
         {
             offsetZ = -6.0f;
-            transform.rotation = Quaternion.Euler(30f, 0f, 0f);
+            transform.rotation = Quaternion.Euler(45f, 0f, 0f);
         }
         else
         {
             offsetZ = 6.0f;
-            transform.rotation = Quaternion.Euler(30f, 180f, 0f);
+            transform.rotation = Quaternion.Euler(45f, 180f, 0f);
         }
 
 
