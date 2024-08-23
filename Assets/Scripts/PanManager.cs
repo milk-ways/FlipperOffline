@@ -56,7 +56,7 @@ public class PanManager : NetworkBehaviour, ISpawned
         }
 
         RpcOnChangeCount();
-        plane.transform.localScale = new Vector3(blank * 0.1f * col, 1f, blank * 0.1f * row);
+        plane.transform.localScale = new Vector3(blank * 0.1f * col + 0.2f , 1f, blank * 0.1f * row + 0.2f);
         plane.transform.position = new Vector3(blank * (col / 2), 0f, blank * (row / 2));
     }
 
