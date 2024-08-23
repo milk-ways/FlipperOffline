@@ -1138,10 +1138,11 @@ MonoBehaviour:
   BlueMaterial: {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
   joystick: {fileID: 0}
   actionButton: {fileID: 0}
+  maxCooltime: 5
   _team: 0
   abilityEffect: {fileID: 5184012557407326748}
   AttackRange: 2
-  attackPower: 10
+  attackPower: 20
 --- !u!114 &4370436611353310642
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class BombCharacter : Character
 {
+    [SerializeField] private float BombRange = 6f;
     protected override void CharacterAction()
     {
         RpcSyncAction();
@@ -21,7 +22,7 @@ public class BombCharacter : Character
 
     private void Bomb()
     {
-        Collider[] colls = Physics.OverlapSphere(transform.position, 3f);
+        Collider[] colls = Physics.OverlapSphere(transform.position, BombRange);
 
         foreach (var coll in colls)
         {

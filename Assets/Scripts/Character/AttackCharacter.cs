@@ -7,8 +7,8 @@ public class AttackCharacter : Character
 {
     private readonly float NormalizedAttackRange = 3f;
 
-    [SerializeField] private float AttackRange = 1f;
-    [SerializeField] private float attackPower = 10f;
+    [SerializeField] private float AttackRange = 1.5f;
+    [SerializeField] private float attackPower = 20f;
     protected override void AwakeOnChild()
     {
         abilityEffect.transform.localScale = new Vector3(AttackRange, 1, AttackRange);

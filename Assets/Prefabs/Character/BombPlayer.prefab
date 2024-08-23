@@ -1204,8 +1204,10 @@ MonoBehaviour:
   BlueMaterial: {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
   joystick: {fileID: 0}
   actionButton: {fileID: 0}
+  maxCooltime: 3
   _team: 0
   abilityEffect: {fileID: 8543259966323160185}
+  BombRange: 5
 --- !u!114 &6386561474746410212
 MonoBehaviour:
   m_ObjectHideFlags: 0

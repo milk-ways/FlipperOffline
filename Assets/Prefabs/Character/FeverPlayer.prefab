@@ -903,9 +903,10 @@ MonoBehaviour:
   BlueMaterial: {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
   joystick: {fileID: 0}
   actionButton: {fileID: 0}
+  maxCooltime: 6
   _team: 0
   abilityEffect: {fileID: 3597681805718812533}
-  ActivatedSpeedRate: 2
+  ActivatedSpeedRate: 1.6
 --- !u!114 &7387059957935903675
 MonoBehaviour:
   m_ObjectHideFlags: 0
