@@ -39,10 +39,11 @@ public class PanManager : NetworkBehaviour, ISpawned
         {
             for (int j = 0; j < col; j++)
             {
-                var temp = NetworkRunnerHandler.Instance.networkRunner.Spawn(pan, new Vector3(blank * j, 0, blank * i));
-                temp.transform.parent = gameObject.transform;
-                temp.GetComponent<Pan>().isFlipped = (i + j) % 2 == 0;
-                if ((i + j) % 2 == 0)
+                float randomOffset = Random.Range(0f, 1f);
+
+                var temp = NetworkRunnerHandler.Instance.networkRunner.Spawn(pan, new Vector3(blank * j + Random.Range(-0.5f, 0.5f), 0, blank * i + Random.Range(-0.5f, 0.5f)));
+                temp.GetComponent<Pan>().isFlipped = (randomOffset <= .5f);
+                if (randomOffset <= .5f)
                 { 
                     redPanCount++; 
                 }
