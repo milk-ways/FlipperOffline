@@ -92,7 +92,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
 
         yield return new WaitForSeconds(0.2f);
 
-        if (count < 11)
+        if (count < 7)
         {
             StartCoroutine(Blink(count + 1, !makeBlink));
         }
