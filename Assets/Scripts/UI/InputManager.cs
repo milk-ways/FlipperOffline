@@ -18,6 +18,11 @@ public class InputManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+        joystick.InitializeJoystick();
+        joystick.gameObject.SetActive(false);
+#endif
+
     }
 
     public VariableJoystick joystick;

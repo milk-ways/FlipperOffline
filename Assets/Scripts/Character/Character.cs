@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using Fusion;
+using Unity.VisualScripting;
 
 public abstract class Character : NetworkBehaviour, IPlayerJoined
 {
@@ -194,7 +195,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
     {
         if(Runner.LocalPlayer == player)
         {
-            team = (Team)(player.PlayerId % 2);
+            team = 0;
             AssignUI();
         }
     }
@@ -211,6 +212,23 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
             TeamIndicator.material = BlueMaterial;
         }
     }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RpcSetTeam(Team team)
+    {
+        Debug.Log(team);
+        this.team = team;
+        RpcOnChangeTeam();
+        GameManager.Instance.SetCharacterPos();
+        Camera.main.GetComponent<CameraController>().SetCameraBoundary();
+    }
+
+    [Rpc]
+    public void RpcOnChangeTeam()
+    {
+        SetTeamColor();
+    }
+        
 }
 
 public enum Team

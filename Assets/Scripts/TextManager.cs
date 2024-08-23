@@ -14,17 +14,22 @@ public class TextManager : MonoBehaviour
     public GameObject result;
     public Transform titleImages;
     public TextMeshProUGUI panResultText;
+    public TextMeshProUGUI resultText;
+
+    public RectTransform timerRect;
 
     public Slider panSlider;
 
     private float time;
 
     private bool gameOver = true;
+    private float panRate = .5f;
 
     public void TimerStart()
     {
+        
         time = GameManager.Instance.GameTime;
-        timeText.gameObject.SetActive(true);
+        timerRect.gameObject.SetActive(true);
         panSlider.gameObject.SetActive(true);
         gameOver = false;
     }
@@ -46,7 +51,7 @@ public class TextManager : MonoBehaviour
         timeText.text = Mathf.Ceil(time).ToString();
     }
 
-    public void GameOver(string str, bool redWin)
+    public void GameOver(int red, int blue, bool redWin)
     {
         result.gameObject.SetActive(true);
 
@@ -54,13 +59,13 @@ public class TextManager : MonoBehaviour
         {
             titleImages.GetChild(1).gameObject.SetActive(true);
             panResultText.color = Color.red;
-            panResultText.text = str + "\n»¡°­ÆÀ ½Â¸®!";
+            panResultText.text = $"<color=red>{red} <color=black>vs <color=blue>{blue}\n\n<color=red>»¡°­ÆÀ ½Â¸®!";
         }
         else
         {
             titleImages.GetChild(0).gameObject.SetActive(true);
             panResultText.color = Color.blue;
-            panResultText.text = str + "\nÆÄ¶ûÆÀ ½Â¸®!";
+            panResultText.text = $"<color=red>{red} <color=black>vs <color=blue>{blue}\n\n<color=blue>ÆÄ¶ûÆÀ ½Â¸®!";
         }
     }
 
@@ -79,7 +84,7 @@ public class TextManager : MonoBehaviour
 
     public void SetPanRate(float value)
     {
-        panSlider.value = value;
+        panRate = value;
     }
 
     public void ReturnToHome()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using Unity.VisualScripting;
 
 public class FeverCharacter : Character
 {
@@ -33,14 +34,14 @@ public class FeverCharacter : Character
     public IEnumerator AcitvateTime(float maxTime)
     {
         isActivated = true;
-        abilityEffect.Play();
+        RpcSyncParticle(true);
         float activateTime = 0f;
         while (activateTime < maxTime)
         {
             activateTime += Time.deltaTime;
             yield return null;
         }
-        abilityEffect.Stop();
+        RpcSyncParticle(false);
         isActivated = false;
     }
 
@@ -48,5 +49,18 @@ public class FeverCharacter : Character
     protected void RpcSyncAction()
     {
         SoundManager.PlayEffect("fever");
+    }
+
+    [Rpc]
+    public void RpcSyncParticle(bool value)
+    {
+        if(value)
+        {
+            abilityEffect.Play();
+        }
+        else
+        {
+            abilityEffect.Stop();
+        }
     }
 }

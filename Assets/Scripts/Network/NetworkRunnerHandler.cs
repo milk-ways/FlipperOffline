@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
-using System.Threading.Tasks;
 
 public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -94,7 +93,9 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
         if (player == runner.LocalPlayer)
         {
-            var localCharacter = runner.Spawn(PlayerPrefab[SelectedPlayer], new Vector3(5f, 0.75f, 5f), Quaternion.identity, player);
+            var localCharacter = runner.Spawn(PlayerPrefab[SelectedPlayer], 
+                                        new Vector3(UnityEngine.Random.Range(0f, 3f), 0.75f, UnityEngine.Random.Range(0f, 3f)), 
+                                        Quaternion.identity, player);
             Debug.Log($"Spawn Character : {runner.LocalPlayer}");
             runner.SetPlayerObject(player, localCharacter);
         }
@@ -135,19 +136,16 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
         var data = new CharacterInputData();
 
+
+#if UNITY_ANDROID
         var joy = InputManager.Instance.joystick;
-
-        var charObj = runner.GetPlayerObject(runner.LocalPlayer);
-        if(charObj != null)
-        {
-            data.ability = charObj.GetComponent<Character>().isAbilityPressed;
-        }
         data.direction += new Vector3(joy.Horizontal, 0, joy.Vertical);
-
+#endif
+#if UNITY_EDITOR || PLATFORM_STANDALONE_WIN
         data.direction = Vector3.zero;
-        if(Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
-            data.direction += Vector3.forward; 
+            data.direction += Vector3.forward;
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -162,6 +160,13 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             data.direction += Vector3.right;
         }
         data.direction.Normalize();
+#endif
+
+        var charObj = runner.GetPlayerObject(runner.LocalPlayer);
+        if (charObj != null)
+        {
+            data.ability = charObj.GetComponent<Character>().isAbilityPressed;
+        }
 
         input.Set(data);
     }

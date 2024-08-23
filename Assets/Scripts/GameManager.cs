@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 using System;
+using static UnityEditor.Progress;
 
 public class GameManager : NetworkBehaviour, ISpawned
 {
@@ -57,18 +58,27 @@ public class GameManager : NetworkBehaviour, ISpawned
 
     public void GameStart()
     {   
-        //Action should be done on every single client
-        SetCharacterColor();
-        SetCharacterPos();
-        Camera.main.GetComponent<CameraController>().SetCameraBoundary();
-        
         //Action should be done only on MasterClient
         if (NetworkRunnerHandler.Instance.networkRunner.IsSharedModeMasterClient)
         {
             NetworkRunnerHandler.Instance.networkRunner.SessionInfo.IsOpen = false;
             panManager.GeneratePans();
+
+            List<PlayerRef> players = new();
+            foreach(var item in Runner.ActivePlayers)
+            {
+                if(item.IsRealPlayer)
+                {
+                    Debug.Log(item);
+                    players.Add(item);
+                }
+            }
+            for(int i = 0; i < players.Count; i++)
+            {
+                Runner.GetPlayerObject(players[i]).GetComponent<Character>().RpcSetTeam((Team)(i % 2));
+            }
             RpcGameStart();
-        }   
+        }
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -77,6 +87,14 @@ public class GameManager : NetworkBehaviour, ISpawned
         SoundManager.PlayBGM("ingame");
         textManager.TimerStart();
     }
+
+    //Action should be done on every single client
+    [Rpc]
+    public void RpcSetTeam(Team team)
+    {
+        Runner.GetPlayerObject(Runner.LocalPlayer).GetComponent<Character>().team = team;
+    }
+
 
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RpcSetWaitingForStart(bool value)
@@ -100,20 +118,18 @@ public class GameManager : NetworkBehaviour, ISpawned
         if (!HasStateAuthority) return;
 
         panManager.CountPanColor();
-        string str = panManager.RedPanCount.ToString() + " : " + panManager.BluePanCount.ToString();
-        Debug.Log(str);
-        RpcGameEnd(str, panManager.IsRedWin);
+        RpcGameEnd(panManager.RedPanCount, panManager.BluePanCount, panManager.IsRedWin);
     }
 
     [Rpc]
-    public void RpcGameEnd(string str, bool res)
+    public void RpcGameEnd(int red, int blue, bool res)
     {
         SoundManager.PlayEffect("result");
         InputManager.Instance.Inactivate();
-        textManager.GameOver(str, res);
+        textManager.GameOver(red, blue, res);
     }
 
-    private void SetCharacterPos()
+    public void SetCharacterPos()
     {
         var localCharacter = NetworkRunnerHandler.Instance.networkRunner.GetPlayerObject(NetworkRunnerHandler.Instance.networkRunner.LocalPlayer);
 
@@ -128,11 +144,10 @@ public class GameManager : NetworkBehaviour, ISpawned
         }
     }
 
-    private void SetCharacterColor()
+    public void SetCharacterColor()
     {
         foreach(var item in Runner.ActivePlayers)
         {
-            Debug.Log(item);
             var curCharacter = Runner.GetPlayerObject(item);
             if (curCharacter == null) return;
             curCharacter.GetComponent<Character>()?.SetTeamColor();
