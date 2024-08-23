@@ -59,7 +59,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         });
     }
 
-    public void FindThreeVsThreeMatch()
+    public void FindTwoVsTwoMatch()
     {
         networkRunner.ProvideInput = true;
         networkRunner.StartGame(new StartGameArgs()
@@ -67,8 +67,8 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             GameMode = GameMode.Shared,
             Address = NetAddress.Any(),
             Scene = SceneRef.FromIndex(1),
-            CustomLobbyName = "3vs3",
-            PlayerCount = 6,
+            CustomLobbyName = "2vs2",
+            PlayerCount = 4,
             SceneManager = sceneManager,
         });
     }

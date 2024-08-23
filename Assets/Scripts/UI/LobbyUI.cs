@@ -37,7 +37,7 @@ public class LobbyUI : MonoBehaviour
 
         MultiMatchButton.onClick.AddListener(() =>
         {
-            MatchButton(NetworkRunnerHandler.Instance.FindThreeVsThreeMatch);
+            MatchButton(NetworkRunnerHandler.Instance.FindTwoVsTwoMatch);
         });
 
         QuitButton.onClick.AddListener(() =>
