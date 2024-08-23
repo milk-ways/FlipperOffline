@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Text;
 
 public class LobbyUI : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] Button nextButton;
     [SerializeField] TextMeshProUGUI characterName;
     [SerializeField] TextMeshProUGUI description;
+
+    [SerializeField] RectTransform MatchmakingWaitingPanel;
+    [SerializeField] TextMeshProUGUI waitingText;
 
     private int current = 0;
     private int previous = 0;
@@ -23,12 +27,16 @@ public class LobbyUI : MonoBehaviour
     {
         SingleMatchButton.onClick.AddListener(() =>
         {
+            StartCoroutine(WatingTextRoutine());
+            MatchmakingWaitingPanel.gameObject.SetActive(true);
             NetworkRunnerHandler.Instance.SelectedPlayer = current;
             NetworkRunnerHandler.Instance.FindOneVsOneMatch();
         });
 
         MultiMatchButton.onClick.AddListener(() =>
         {
+            StartCoroutine(WatingTextRoutine());
+            MatchmakingWaitingPanel.gameObject.SetActive(true);
             NetworkRunnerHandler.Instance.SelectedPlayer = current;
             NetworkRunnerHandler.Instance.FindThreeVsThreeMatch();
         });
@@ -76,5 +84,21 @@ public class LobbyUI : MonoBehaviour
         characterName.text = players[current].name;
 
         description.text = players[current].GetComponent<Character>().description;
+    }
+
+    private float duration = 0.2f;
+    private int len = 1;
+    private IEnumerator WatingTextRoutine()
+    {
+        StringBuilder builder = new();
+        builder.Append("技记 立加 吝....");
+
+        int baseLen = "技记 立加 吝".Length;
+        while(true)
+        {
+            waitingText.text = builder.ToString(0, baseLen + len);
+            yield return new WaitForSeconds(duration);
+            len = (len + 1) % 4;
+        }
     }
 }
