@@ -44,7 +44,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
     private Vector3 previousPos = Vector3.zero;
     public override void FixedUpdateNetwork()
     {
-        if (transform.position.y <= -2.5f)
+        if (transform.position.y <= -1f)
         {
             Revive();
         }
@@ -92,7 +92,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
 
         yield return new WaitForSeconds(0.2f);
 
-        if (count < 7)
+        if (count < 11)
         {
             StartCoroutine(Blink(count + 1, !makeBlink));
         }

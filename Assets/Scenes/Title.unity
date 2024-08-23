@@ -3721,6 +3721,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 930216613}
+  - component: {fileID: 930216614}
   m_Layer: 0
   m_Name: Fever
   m_TagString: Untagged
@@ -3748,6 +3749,27 @@ Transform:
   - {fileID: 662227220}
   m_Father: {fileID: 2073655960}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!95 &930216614
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930216612}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: eeebdeb8be91e0e43ae9170c2d8e4279, type: 3}
+  m_Controller: {fileID: 9100000, guid: f5e71d2eda3d6cc40857811c187df502, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &939080153
 GameObject:
   m_ObjectHideFlags: 0
@@ -7260,7 +7282,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "3 vs 3 \uB300\uACB0"
+  m_text: "2 vs 2 \uB300\uACB0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45ed0f4a6521f1f418b51ffba48edffa, type: 2}
   m_sharedMaterial: {fileID: 7305151756034776112, guid: 45ed0f4a6521f1f418b51ffba48edffa, type: 2}
@@ -8176,6 +8198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1763256218}
+  - component: {fileID: 1763256219}
   m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
@@ -8205,6 +8228,27 @@ Transform:
   - {fileID: 281317532}
   m_Father: {fileID: 2073655960}
   m_LocalEulerAnglesHint: {x: 20, y: 170, z: 0}
+--- !u!95 &1763256219
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763256217}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: eeebdeb8be91e0e43ae9170c2d8e4279, type: 3}
+  m_Controller: {fileID: 9100000, guid: 12b8bc3d310e7d24086421eccc7a1d64, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1771118098
 GameObject:
   m_ObjectHideFlags: 0
@@ -8870,6 +8914,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1840531669}
+  - component: {fileID: 1840531670}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Untagged
@@ -8898,6 +8943,27 @@ Transform:
   - {fileID: 5303441}
   m_Father: {fileID: 2073655960}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!95 &1840531670
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840531668}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: eeebdeb8be91e0e43ae9170c2d8e4279, type: 3}
+  m_Controller: {fileID: 9100000, guid: d9ffcb82e9624fa4ca923ec9dc7a7682, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1844826101
 GameObject:
   m_ObjectHideFlags: 0
