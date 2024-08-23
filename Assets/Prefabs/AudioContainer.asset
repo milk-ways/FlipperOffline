@@ -18,9 +18,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 63a95f1cd0a1d8f4f8ff28c6361cbdf6, type: 3}
   - {fileID: 8300000, guid: 9decba576a368ec46a90938c57da5d5a, type: 3}
   - {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
+  - {fileID: 8300000, guid: 4417b95c0f36c964a861cdb118f4166b, type: 3}
   audioClipKey:
   - attack
   - bomb
   - fever
   - result
   - flip
+  - ingame

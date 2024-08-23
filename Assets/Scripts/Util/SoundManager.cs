@@ -6,7 +6,7 @@ using UnityEngine;
 public class SoundManager : DontDestroySingleton<SoundManager>
 {
     [SerializeField] AudioContainer container;
-    AudioSource bgmSource;
+    [SerializeField] AudioSource bgmSource;
     List<AudioSource> effectSource = new();
 
 

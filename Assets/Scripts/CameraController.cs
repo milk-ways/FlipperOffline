@@ -19,28 +19,6 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Vector3 maxCameraBoundary;
 
-    //public void SetCameraBoundary()
-    //{
-    //    //Debug.Log(Camera.main.orthographicSize);
-    //    //Debug.Log(Screen.height);
-    //    //Debug.Log(Screen.width);
-    //    //Debug.Log(Camera.main.orthographicSize * Screen.width / Screen.height);
-
-    //    float height = Camera.main.orthographicSize;
-    //    float width = height * Screen.width / Screen.height;
-
-    //    minCameraBoundary = new Vector3(
-    //        -width * GameManager.Instance.Col + offsetX,
-    //        offsetY,
-    //        -height * (GameManager.Instance.Row - 1) + offsetZ
-    //        );
-    //    maxCameraBoundary = new Vector3(
-    //        width * GameManager.Instance.Col + offsetX,
-    //        offsetY,
-    //        height * (GameManager.Instance.Row - 1) + offsetZ
-    //        );
-    //}
-
     public void SetCameraBoundary()
     {
         if (Target.GetComponent<Character>().team == 0)

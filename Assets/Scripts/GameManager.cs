@@ -74,6 +74,7 @@ public class GameManager : NetworkBehaviour, ISpawned
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RpcGameStart()
     {
+        SoundManager.PlayBGM("ingame");
         textManager.TimerStart();
     }
 

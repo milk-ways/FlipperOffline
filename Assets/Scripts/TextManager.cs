@@ -84,6 +84,7 @@ public class TextManager : MonoBehaviour
 
     public void ReturnToHome()
     {
+        SoundManager.StopAll();
         NetworkRunnerHandler.Instance.networkRunner.Shutdown();
     }
 }
