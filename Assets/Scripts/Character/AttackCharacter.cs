@@ -25,8 +25,6 @@ public class AttackCharacter : Character
                 continue;
 
             Vector3 dir = (coll.gameObject.transform.position - transform.position).normalized * attackPower;   
-
-            Debug.Log(coll.gameObject.name);
             coll.GetComponent<Character>().RpcAddForce(dir);
         }
     }

@@ -37,6 +37,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
     }
     protected virtual void AwakeOnChild() { }
 
+    private Vector3 previousPos = Vector3.zero;
     public override void FixedUpdateNetwork()
     {
         if (transform.position.y <= -2.5f)
@@ -44,7 +45,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
             Revive();
         }
 
-        if(GetInput(out CharacterInputData data))
+        if (GetInput(out CharacterInputData data))
         {
             Move(data.direction);
 
@@ -53,6 +54,7 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
                 Ability();
             }
         }
+
         isAbilityPressed = false;
     }
 
@@ -120,8 +122,16 @@ public abstract class Character : NetworkBehaviour, IPlayerJoined
         if (moveVec.sqrMagnitude < 0.001f) return;
 
         transform.Translate(moveVec);
-        transform.GetChild(0).rotation = Quaternion.LookRotation(dir * (team == Team.blue ? 1 : -1));
+        RpcSyncRot(moveVec);
+        //transform.GetChild(0).rotation = Quaternion.LookRotation(dir * (team == Team.blue ? 1 : -1));
     }
+
+    [Rpc]
+    public void RpcSyncRot(Vector3 dir)
+    {
+        transform.GetChild(0).rotation = Quaternion.LookRotation(dir);
+    }
+
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RpcAddForce(Vector3 dir)

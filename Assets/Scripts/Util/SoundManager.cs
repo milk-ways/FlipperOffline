@@ -128,7 +128,7 @@ public class SoundManager : DontDestroySingleton<SoundManager>
 
         for(int i = 0; i < Instance.effectSource.Count; i++)
         {
-            Instance.effectSource[i].Stop();
+            Instance.effectSource[i]?.Stop();
         }
     }
 }
