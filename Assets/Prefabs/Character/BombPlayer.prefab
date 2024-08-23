@@ -1186,7 +1186,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &7935525686377253782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1199,6 +1199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71a115225092e84da9295b896c1ff8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 7.5
   TeamIndicator: {fileID: 4810820850853258068}
   RedMaterial: {fileID: 2100000, guid: c15c315488711804d80c2b2bab50154c, type: 2}
   BlueMaterial: {fileID: 2100000, guid: e6c4e27510e2d164d86c33ef2069b47a, type: 2}
@@ -1242,7 +1243,7 @@ MonoBehaviour:
   SyncScale: 0
   SyncParent: 0
   _autoAOIOverride: 1
-  DisableSharedModeInterpolation: 0
+  DisableSharedModeInterpolation: 1
 --- !u!135 &7060819340146051721
 SphereCollider:
   m_ObjectHideFlags: 0
