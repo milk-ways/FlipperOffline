@@ -123,7 +123,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
                 }
             }
         }
-
+        
         if (runner.IsSharedModeMasterClient)
         {
             GameManager.Instance.WaitingForStart = false;
@@ -135,6 +135,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         if (SceneManager.GetActiveScene().buildIndex != 1) return;
 
         var data = new CharacterInputData();
+        VariableJoystick joy;
 
         data.direction = Vector3.zero;
 #if UNITY_EDITOR || PLATFORM_STANDALONE_WIN
@@ -157,7 +158,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         data.direction.Normalize();
 #endif
 #if UNITY_ANDROID
-        var joy = InputManager.Instance.joystick;
+        joy = InputManager.Instance.joystick;
         data.direction += new Vector3(joy.Horizontal, 0, joy.Vertical);
 #endif
         if(Application.platform == RuntimePlatform.WebGLPlayer)
@@ -179,7 +180,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
                 data.direction += Vector3.right;
             }
             data.direction.Normalize();
-            var joy = InputManager.Instance.joystick;
+            joy = InputManager.Instance.joystick;
             data.direction += new Vector3(joy.Horizontal, 0, joy.Vertical);
         }
 
