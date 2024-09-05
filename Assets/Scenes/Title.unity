@@ -186,6 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   container: {fileID: 11400000, guid: 12e480d1befeaa740a04297a209397f7, type: 2}
   bgmSource: {fileID: 5780528}
+  LobbyName: 
 --- !u!4 &5780527
 Transform:
   m_ObjectHideFlags: 0
@@ -6697,7 +6698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -9511,7 +9512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -10956,13 +10957,13 @@ RectTransform:
   m_Children:
   - {fileID: 1111248442}
   - {fileID: 1942711387}
-  - {fileID: 1679343819}
-  - {fileID: 687216831}
-  - {fileID: 284521675}
   - {fileID: 1407281420}
   - {fileID: 1356347119}
   - {fileID: 1818343320}
   - {fileID: 1184388972}
+  - {fileID: 1679343819}
+  - {fileID: 687216831}
+  - {fileID: 284521675}
   - {fileID: 246914510}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

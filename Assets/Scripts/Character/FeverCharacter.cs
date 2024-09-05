@@ -26,9 +26,11 @@ public class FeverCharacter : Character
             return;
 
         Vector3 moveVec = dir * (team == Team.blue ? 1 : -1) * speed * (isActivated ? ActivatedSpeedRate : 1f) * Runner.DeltaTime;
-        transform.Translate(moveVec);
 
-        transform.GetChild(0).rotation = Quaternion.LookRotation(dir * (team == Team.blue ? 1 : -1));
+        if (moveVec.sqrMagnitude < 0.001f) return;
+
+        transform.Translate(moveVec);
+        RpcSyncRot(moveVec);
     }
 
     public IEnumerator AcitvateTime(float maxTime)

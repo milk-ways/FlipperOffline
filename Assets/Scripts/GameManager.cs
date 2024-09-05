@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 using System;
-using static UnityEditor.Progress;
 
 public class GameManager : NetworkBehaviour, ISpawned
 {

@@ -22,6 +22,9 @@ public class InputManager : MonoBehaviour
         joystick.InitializeJoystick();
         joystick.gameObject.SetActive(false);
 #endif
+#if UNITY_WEBGL
+        WebGLInput.captureAllKeyboardInput = false;
+#endif
 
     }
 

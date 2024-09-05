@@ -136,13 +136,8 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
         var data = new CharacterInputData();
 
-
-#if UNITY_ANDROID
-        var joy = InputManager.Instance.joystick;
-        data.direction += new Vector3(joy.Horizontal, 0, joy.Vertical);
-#endif
-#if UNITY_EDITOR || PLATFORM_STANDALONE_WIN
         data.direction = Vector3.zero;
+#if UNITY_EDITOR || PLATFORM_STANDALONE_WIN
         if (Input.GetKey(KeyCode.W))
         {
             data.direction += Vector3.forward;
@@ -161,6 +156,32 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         }
         data.direction.Normalize();
 #endif
+#if UNITY_ANDROID
+        var joy = InputManager.Instance.joystick;
+        data.direction += new Vector3(joy.Horizontal, 0, joy.Vertical);
+#endif
+        if(Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            if (Input.GetKey(KeyCode.W))
+            {
+                data.direction += Vector3.forward;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                data.direction += Vector3.left;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                data.direction += Vector3.back;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                data.direction += Vector3.right;
+            }
+            data.direction.Normalize();
+            var joy = InputManager.Instance.joystick;
+            data.direction += new Vector3(joy.Horizontal, 0, joy.Vertical);
+        }
 
         var charObj = runner.GetPlayerObject(runner.LocalPlayer);
         if (charObj != null)
