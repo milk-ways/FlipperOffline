@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 175a71f524830b040b1fc13650904abb, type: 3}
+  m_Name: AudioContainer
+  m_EditorClassIdentifier: 
+  audioClips:
+  - {fileID: 8300000, guid: f610393378cfa32a99e88c4e5d9af93b, type: 3}
+  - {fileID: 8300000, guid: 91937034e8690bab4a51993657db6c12, type: 3}
+  - {fileID: 8300000, guid: 63a95f1cd0a1d8f4f8ff28c6361cbdf6, type: 3}
+  - {fileID: 8300000, guid: 9decba576a368ec46a90938c57da5d5a, type: 3}
+  - {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
+  - {fileID: 8300000, guid: 4417b95c0f36c964a861cdb118f4166b, type: 3}
+  - {fileID: 8300000, guid: 245965889d0a183438ef3478b27122c0, type: 3}
+  - {fileID: 8300000, guid: b37e3e3d90fec9f4b85953cc52e3b6eb, type: 3}
+  audioClipKey:
+  - attack
+  - bomb
+  - fever
+  - result
+  - flip
+  - ingame
+  - buttonClick
+  - titleBGM

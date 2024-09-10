@@ -7,8 +7,8 @@ public class CameraController : MonoBehaviour
     public GameObject Target;
 
     private float offsetX = 0.0f;
-    private float offsetY = 4.0f;
-    private float offsetZ = -6.0f;
+    private float offsetY = 6.0f;
+    private float offsetZ = -8.0f;
 
     [SerializeField]
     private float cameraSpeed = 10.0f;
@@ -21,13 +21,21 @@ public class CameraController : MonoBehaviour
 
     public void SetCameraBoundary()
     {
-        //Debug.Log(Camera.main.orthographicSize);
-        //Debug.Log(Screen.height);
-        //Debug.Log(Screen.width);
-        //Debug.Log(Camera.main.orthographicSize * Screen.width / Screen.height);
+        if (Target.GetComponent<Character>().team == 0)
+        {
+            offsetZ = -6.0f;
+            transform.rotation = Quaternion.Euler(45f, 0f, 0f);
+        }
+        else
+        {
+            offsetZ = 6.0f;
+            transform.rotation = Quaternion.Euler(45f, 180f, 0f);
+        }
+
 
         float height = Camera.main.orthographicSize;
         float width = height * Screen.width / Screen.height;
+
 
         minCameraBoundary = new Vector3(
             -width * GameManager.Instance.Col + offsetX,
@@ -38,36 +46,6 @@ public class CameraController : MonoBehaviour
             width * GameManager.Instance.Col + offsetX,
             offsetY,
             height * (GameManager.Instance.Row - 1) + offsetZ
-            );
-    }
-
-    public void NoNetworkSetCameraBoundary()
-    {
-        if (Target.GetComponent<Character>().team == 0)
-        {
-            offsetZ = -6.0f;
-            transform.rotation = Quaternion.Euler(30f, 0f, 0f);
-        }
-        else
-        {
-            offsetZ = 6.0f;
-            transform.rotation = Quaternion.Euler(30f, 180f, 0f);
-        }
-
-
-        float height = Camera.main.orthographicSize;
-        float width = height * Screen.width / Screen.height;
-
-
-        minCameraBoundary = new Vector3(
-            -width * TempGameManager.Instance.Col + offsetX,
-            offsetY,
-            -height * (TempGameManager.Instance.Row - 1) + offsetZ
-            );
-        maxCameraBoundary = new Vector3(
-            width * TempGameManager.Instance.Col + offsetX,
-            offsetY,
-            height * (TempGameManager.Instance.Row - 1) + offsetZ
             );
     }
 

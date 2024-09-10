@@ -6,11 +6,9 @@ public class PaintCharacter : Character
 {
     private bool isActivated = false;
 
-    protected override void Action()
+    protected override void CharacterAction()
     {
         StartCoroutine(AcitvateTime(1f));
-
-        StartCoroutine(CoolTime());
     }
 
     public IEnumerator AcitvateTime(float maxTime)

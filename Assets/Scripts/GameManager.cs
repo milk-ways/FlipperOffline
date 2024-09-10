@@ -1,19 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Fusion;
 using System;
 
-public class GameManager : NetworkBehaviour
+public class GameManager : NetworkBehaviour, ISpawned
 {
     private static GameManager _instance;
 
-    //public PanGroup panGroup;
     public PanManager panManager;
     public TextManager textManager;
-
-    public GameObject character;
 
     [SerializeField]
     private int row;
@@ -25,11 +21,13 @@ public class GameManager : NetworkBehaviour
     public int Row { get { return row; } }
     public int Col { get { return col; } }
     public int GameTime => gameTime;
-    //temp code
-    public VariableJoystick joy;
-    public Button btn;
 
     public Action OnGameStart;
+
+    [Networked]
+    public bool WaitingForStart { get; set; } = false;
+
+    [SerializeField] private int delayBeforeStart = 5;
 
     public static GameManager Instance
     {
@@ -47,56 +45,111 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-    private void Awake()
+    public override void Spawned()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
-        else if (_instance != this)
-        {
-            Destroy(gameObject);
-        }
-        // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
-        DontDestroyOnLoad(gameObject);
-    }
+        panManager = FindObjectOfType<PanManager>();
+        textManager = FindObjectOfType<TextManager>();
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            //GameStart();
-        }
+        OnGameStart += () => textManager.isStarted = !textManager.isStarted;
+
+        NetworkRunnerHandler.Instance.networkRunner.SessionInfo.IsOpen = true;
     }
 
     public void GameStart()
-    {
-        if (!NetworkRunnerHandler.Instance.networkRunner.IsSharedModeMasterClient) return;
+    {   
+        //Action should be done only on MasterClient
+        if (NetworkRunnerHandler.Instance.networkRunner.IsSharedModeMasterClient)
+        {
+            NetworkRunnerHandler.Instance.networkRunner.SessionInfo.IsOpen = false;
+            panManager.GeneratePans();
 
-        OnGameStart?.Invoke();
-        
-        GenerateCharacter();
-        Camera.main.GetComponent<CameraController>().SetCameraBoundary();
+            List<PlayerRef> players = new();
+            foreach(var item in Runner.ActivePlayers)
+            {
+                if(item.IsRealPlayer)
+                {
+                    Debug.Log(item);
+                    players.Add(item);
+                }
+            }
+            for(int i = 0; i < players.Count; i++)
+            {
+                Runner.GetPlayerObject(players[i]).GetComponent<Character>().RpcSetTeam((Team)(i % 2));
+            }
+            RpcGameStart();
+        }
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RpcGameStart()
+    {
+        SoundManager.PlayBGM("ingame");
+        textManager.TimerStart();
+    }
+
+    //Action should be done on every single client
+    [Rpc]
+    public void RpcSetTeam(Team team)
+    {
+        Runner.GetPlayerObject(Runner.LocalPlayer).GetComponent<Character>().team = team;
+    }
+
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RpcSetWaitingForStart(bool value)
+    {
+        WaitingForStart = value;
+        if(value)
+        {
+            StartCoroutine(GameStartEnum());
+        }
+    }
+
+    private IEnumerator GameStartEnum()
+    {
+        yield return StartCoroutine(textManager.ShowReadyText(delayBeforeStart));
+        if (!WaitingForStart) yield break;
+        GameStart();
     }
 
     public void GameEnd() 
     {
-        panManager.CountPanColor();
+        if (!HasStateAuthority) return;
 
-        string str = panManager.RedPanCount.ToString() + " : " + panManager.BluePanCount.ToString();
-        textManager.GameOver(str, panManager.IsRedWin);
+        panManager.CountPanColor();
+        RpcGameEnd(panManager.RedPanCount, panManager.BluePanCount, panManager.IsRedWin);
     }
 
-    private void GenerateCharacter()
+    [Rpc]
+    public void RpcGameEnd(int red, int blue, bool res)
     {
-        NetworkRunner runner = NetworkRunnerHandler.Instance.networkRunner;
-        var localCharacter = runner.GetPlayerObject(runner.LocalPlayer);
+        SoundManager.PlayEffect("result");
+        InputManager.Instance.Inactivate();
+        textManager.GameOver(red, blue, res);
+    }
 
-        localCharacter.transform.position = new Vector3((1.5f * (row / 2)), 0.75f, (1.5f * (col / 2)));
-        //temp.GetComponent<Character>().joystick = joy;
-        localCharacter.GetComponent<Character>().AssignUI(joy, btn);
+    public void SetCharacterPos()
+    {
+        var localCharacter = NetworkRunnerHandler.Instance.networkRunner.GetPlayerObject(NetworkRunnerHandler.Instance.networkRunner.LocalPlayer);
 
-        Camera.main.GetComponent<CameraController>().Target = localCharacter.gameObject;
+        if (localCharacter == null) return;
+        if (localCharacter.GetComponent<Character>().team == 0)
+        {
+            localCharacter.transform.position = new Vector3(panManager.blank * UnityEngine.Random.Range(0, col - 1), 4.5f, panManager.blank * UnityEngine.Random.Range(0, row - 1));
+        }
+        else
+        {
+            localCharacter.transform.position = new Vector3(panManager.blank * UnityEngine.Random.Range(0, col - 1), 4.5f, panManager.blank * UnityEngine.Random.Range(0, row - 1));
+        }
+    }
+
+    public void SetCharacterColor()
+    {
+        foreach(var item in Runner.ActivePlayers)
+        {
+            var curCharacter = Runner.GetPlayerObject(item);
+            if (curCharacter == null) return;
+            curCharacter.GetComponent<Character>()?.SetTeamColor();
+        }
     }
 }

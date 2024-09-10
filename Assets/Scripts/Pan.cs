@@ -3,21 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pan : NetworkBehaviour
+public class Pan : NetworkBehaviour, ISpawned
 {
-    public bool isFlipped = false;
-    private Color flipedColor = Color.red;
+    [Networked, OnChangedRender(nameof(InternalFlip))]
+    public bool isFlipped { get; set; } = false;
+  
+    private Color flippedColor = Color.red;
     private Color nonFlippedColor = Color.blue;
 
     private bool isStatic = false;
 
     [SerializeField]
     private Renderer panColor;
-
-    private void Awake()
-    {
-        panColor.material.color = nonFlippedColor;
-    }
 
     public IEnumerator StaticlizePan(float maxTime)
     {
@@ -31,23 +28,52 @@ public class Pan : NetworkBehaviour
         }
 
         isStatic = false;
-
     }
-
-    public void Flip()
+   
+    private void InternalFlip()
     {
         if (isStatic)
             return;
 
-        isFlipped = !isFlipped;
-
         if (isFlipped)
         {
-            panColor.material.color = flipedColor;
+            panColor.material.color = flippedColor;
         }
         else
         {
             panColor.material.color = nonFlippedColor;
         }
     }
+
+    public void Flip()
+    {
+        SoundManager.PlayEffect("flip");
+        if (!HasStateAuthority)
+        {
+            if (!isFlipped)
+            {
+                panColor.material.color = flippedColor;
+            }
+            else
+            {
+                panColor.material.color = nonFlippedColor;
+            }
+            return;
+        }
+
+        isFlipped = !isFlipped;
+        GameManager.Instance.panManager.AddPanCount(isFlipped);
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RpcFlip()
+    {
+        Flip();
+    }
+
+    public override void Spawned()
+    {
+        InternalFlip();
+    }
+
 }

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cab3c8a4a83a16479150648f27d95be, type: 3}
+  m_Name: CharacterDesc
+  m_EditorClassIdentifier: 
+  characterName:
+  - "\uD30C\uC774\uD130"
+  - "\uC2A4\uD53C\uB354"
+  - "\uBBF8\uC220\uAC00"
+  characterDesc:
+  - "<size=45><b>\uBAA8\uB450 \uB0A0\uB824\uBC84\uB9AC\uACA0\uB2E4!</b></size><br><br>\uC77C\uC815
+    \uBC94\uC704 \uB0B4\uC758 \uBAA8\uB450\uB97C \uBC00\uCCD0\uB0C5\uB2C8\uB2E4"
+  - "<size=45><b>\uB204\uAD6C\uBCF4\uB2E4 \uBE60\uB974\uAC8C!</b></size><br><br>\uC77C\uC815
+    \uC2DC\uAC04 \uB3D9\uC548 \uBE60\uB974\uAC8C \uC6C0\uC9C1\uC785\uB2C8\uB2E4"
+  - "<size=45><b>\uB0B4 \uC0C9\uAE54\uB85C \uBB3C\uB4E4\uC5EC\uC8FC\uC9C0!</b></size><br><br>\uC8FC\uC704
+    \uD310\uC744 \uBAA8\uB450 \uC790\uC2E0\uC758 \uC0C9\uAE54\uB85C \uBC14\uAFC9\uB2C8\uB2E4"

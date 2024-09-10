@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3280176770742370801}
   - component: {fileID: 1512865313414756341}
   - component: {fileID: -1865758270420141016}
-  - component: {fileID: 4446500296595046738}
   m_Layer: 0
   m_Name: PaintPlayer
   m_TagString: Player
@@ -136,18 +135,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &4446500296595046738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2960473355235908814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e930454a4ea49849b5f0222171c55e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  joystick: {fileID: 0}
-  actionButton: {fileID: 0}

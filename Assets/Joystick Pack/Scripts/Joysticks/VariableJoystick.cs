@@ -58,6 +58,11 @@ public class VariableJoystick : Joystick
         }
         base.HandleInput(magnitude, normalised, radius, cam);
     }
+
+    public void InitializeJoystick()
+    {
+        input = Vector2.zero;
+    }
 }
 
 public enum JoystickType { Fixed, Floating, Dynamic }
